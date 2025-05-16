@@ -1,0 +1,510 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+"""
+统一数据存储管理模块
+
+提供标准化的数据存储位置和访问接口，避免各模块使用不同的路径查找逻辑。
+"""
+
+import os
+import json
+import yaml
+import sqlite3
+import logging
+import shutil
+from datetime import datetime
+from typing import Dict, List, Any, Optional, Union, Tuple
+
+# 导入配置加载器
+from config_loader import config
+
+# 配置日志
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
+logger = logging.getLogger('data_manager')
+
+class DataManager:
+    """统一数据管理器，处理所有数据存储和访问逻辑"""
+    
+    # 单例实例
+    _instance = None
+    
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super(DataManager, cls).__new__(cls)
+            cls._instance._initialized = False
+        return cls._instance
+    
+    def __init__(self):
+        """初始化数据管理器"""
+        if self._initialized:
+            return
+            
+        # 从配置中加载数据目录路径
+        self.data_dir = config.get('common', 'data_dir', default='../data')
+        
+        # 确保数据目录是绝对路径
+        if not os.path.isabs(self.data_dir):
+            base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            self.data_dir = os.path.join(base_dir, self.data_dir)
+        
+        # 定义标准子目录
+        self.subdirs = {
+            'db': 'database',         # 数据库文件目录
+            'config': 'config',       # 配置文件目录
+            'logs': 'logs',           # 日志文件目录
+            'exports': 'exports',     # 导出数据目录
+            'cache': 'cache',         # 缓存数据目录
+            'analytics': 'analytics', # 分析结果目录
+            'products': 'products',   # 产品数据目录
+            'users': 'users',         # 用户数据目录
+            'sessions': 'sessions',   # 会话数据目录
+            'uploads': 'uploads',     # 上传文件目录
+            'temp': 'temp'            # 临时文件目录
+        }
+        
+        # 初始化数据目录结构
+        self._init_directories()
+        
+        # 数据库连接缓存
+        self.db_connections = {}
+        
+        self._initialized = True
+        logger.info(f"数据管理器已初始化，数据目录: {self.data_dir}")
+    
+    def _init_directories(self):
+        """初始化标准数据目录结构"""
+        # 确保主数据目录存在
+        if not os.path.exists(self.data_dir):
+            os.makedirs(self.data_dir)
+            logger.info(f"创建主数据目录: {self.data_dir}")
+        
+        # 创建所有标准子目录
+        for subdir in self.subdirs.values():
+            subdir_path = os.path.join(self.data_dir, subdir)
+            if not os.path.exists(subdir_path):
+                os.makedirs(subdir_path)
+                logger.info(f"创建子目录: {subdir_path}")
+    
+    def get_path(self, data_type: str, *paths: str) -> str:
+        """获取特定类型数据的标准路径
+        
+        Args:
+            data_type: 数据类型，对应标准子目录
+            *paths: 子路径组件
+            
+        Returns:
+            str: 完整的数据路径
+        
+        Raises:
+            ValueError: 如果指定的数据类型无效
+        """
+        if data_type not in self.subdirs:
+            valid_types = ', '.join(self.subdirs.keys())
+            raise ValueError(f"无效的数据类型: {data_type}，有效类型: {valid_types}")
+        
+        # 构建完整路径
+        full_path = os.path.join(self.data_dir, self.subdirs[data_type], *paths)
+        
+        # 确保父目录存在
+        parent_dir = os.path.dirname(full_path)
+        if not os.path.exists(parent_dir):
+            os.makedirs(parent_dir)
+            logger.debug(f"创建目录: {parent_dir}")
+        
+        return full_path
+    
+    def get_db_path(self, db_name: str = "simulation_data.db") -> str:
+        """获取数据库文件路径
+        
+        Args:
+            db_name: 数据库文件名
+            
+        Returns:
+            str: 数据库文件的完整路径
+        """
+        return self.get_path('db', db_name)
+    
+    def get_db_connection(self, db_name: str = "simulation_data.db") -> sqlite3.Connection:
+        """获取数据库连接
+        
+        Args:
+            db_name: 数据库文件名
+            
+        Returns:
+            sqlite3.Connection: 数据库连接对象
+        """
+        db_path = self.get_db_path(db_name)
+        
+        # 检查连接缓存
+        if db_path in self.db_connections and self.db_connections[db_path].is_alive:
+            return self.db_connections[db_path]
+        
+        # 创建新连接
+        conn = sqlite3.connect(db_path)
+        conn.row_factory = sqlite3.Row
+        self.db_connections[db_path] = conn
+        return conn
+    
+    def close_db_connections(self):
+        """关闭所有数据库连接"""
+        for db_path, conn in list(self.db_connections.items()):
+            try:
+                conn.close()
+                del self.db_connections[db_path]
+            except Exception as e:
+                logger.error(f"关闭数据库连接时出错: {e}")
+    
+    def load_json(self, data_type: str, file_path: str) -> Dict:
+        """加载JSON数据文件
+        
+        Args:
+            data_type: 数据类型
+            file_path: 相对于数据类型目录的文件路径
+            
+        Returns:
+            Dict: 加载的JSON数据
+        """
+        full_path = self.get_path(data_type, file_path)
+        try:
+            if os.path.exists(full_path):
+                with open(full_path, 'r', encoding='utf-8') as f:
+                    return json.load(f)
+            return {}
+        except Exception as e:
+            logger.error(f"加载JSON文件时出错 {full_path}: {e}")
+            return {}
+    
+    def save_json(self, data: Dict, data_type: str, file_path: str, 
+                  indent: int = 2, backup: bool = False) -> bool:
+        """保存JSON数据到文件
+        
+        Args:
+            data: 要保存的数据
+            data_type: 数据类型
+            file_path: 相对于数据类型目录的文件路径
+            indent: JSON缩进空格数
+            backup: 是否备份现有文件
+            
+        Returns:
+            bool: 是否成功保存
+        """
+        full_path = self.get_path(data_type, file_path)
+        
+        # 备份现有文件
+        if backup and os.path.exists(full_path):
+            backup_dir = self.get_path('temp', 'backups', data_type)
+            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+            filename = os.path.basename(file_path)
+            backup_path = os.path.join(backup_dir, f"{filename}.{timestamp}.bak")
+            try:
+                shutil.copy2(full_path, backup_path)
+                logger.debug(f"已备份文件: {full_path} -> {backup_path}")
+            except Exception as e:
+                logger.error(f"备份文件失败 {full_path}: {e}")
+        
+        # 保存数据
+        try:
+            with open(full_path, 'w', encoding='utf-8') as f:
+                json.dump(data, f, ensure_ascii=False, indent=indent)
+            return True
+        except Exception as e:
+            logger.error(f"保存JSON文件时出错 {full_path}: {e}")
+            return False
+    
+    def load_yaml(self, data_type: str, file_path: str) -> Dict:
+        """加载YAML数据文件
+        
+        Args:
+            data_type: 数据类型
+            file_path: 相对于数据类型目录的文件路径
+            
+        Returns:
+            Dict: 加载的YAML数据
+        """
+        full_path = self.get_path(data_type, file_path)
+        try:
+            if os.path.exists(full_path):
+                with open(full_path, 'r', encoding='utf-8') as f:
+                    return yaml.safe_load(f)
+            return {}
+        except Exception as e:
+            logger.error(f"加载YAML文件时出错 {full_path}: {e}")
+            return {}
+    
+    def save_yaml(self, data: Dict, data_type: str, file_path: str, 
+                  backup: bool = False) -> bool:
+        """保存YAML数据到文件
+        
+        Args:
+            data: 要保存的数据
+            data_type: 数据类型
+            file_path: 相对于数据类型目录的文件路径
+            backup: 是否备份现有文件
+            
+        Returns:
+            bool: 是否成功保存
+        """
+        full_path = self.get_path(data_type, file_path)
+        
+        # 备份现有文件
+        if backup and os.path.exists(full_path):
+            backup_dir = self.get_path('temp', 'backups', data_type)
+            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+            filename = os.path.basename(file_path)
+            backup_path = os.path.join(backup_dir, f"{filename}.{timestamp}.bak")
+            try:
+                shutil.copy2(full_path, backup_path)
+                logger.debug(f"已备份文件: {full_path} -> {backup_path}")
+            except Exception as e:
+                logger.error(f"备份文件失败 {full_path}: {e}")
+        
+        # 保存数据
+        try:
+            with open(full_path, 'w', encoding='utf-8') as f:
+                yaml.dump(data, f, default_flow_style=False, allow_unicode=True)
+            return True
+        except Exception as e:
+            logger.error(f"保存YAML文件时出错 {full_path}: {e}")
+            return False
+    
+    def file_exists(self, data_type: str, file_path: str) -> bool:
+        """检查文件是否存在
+        
+        Args:
+            data_type: 数据类型
+            file_path: 相对于数据类型目录的文件路径
+            
+        Returns:
+            bool: 文件是否存在
+        """
+        full_path = self.get_path(data_type, file_path)
+        return os.path.exists(full_path) and os.path.isfile(full_path)
+    
+    def dir_exists(self, data_type: str, dir_path: str = "") -> bool:
+        """检查目录是否存在
+        
+        Args:
+            data_type: 数据类型
+            dir_path: 相对于数据类型目录的路径
+            
+        Returns:
+            bool: 目录是否存在
+        """
+        full_path = self.get_path(data_type, dir_path)
+        return os.path.exists(full_path) and os.path.isdir(full_path)
+    
+    def list_files(self, data_type: str, dir_path: str = "", 
+                  pattern: str = "*", recursive: bool = False) -> List[str]:
+        """列出指定目录下的文件
+        
+        Args:
+            data_type: 数据类型
+            dir_path: 相对于数据类型目录的路径
+            pattern: 文件名匹配模式
+            recursive: 是否递归查找子目录
+            
+        Returns:
+            List[str]: 文件路径列表
+        """
+        import glob
+        
+        full_path = self.get_path(data_type, dir_path)
+        if not os.path.exists(full_path):
+            return []
+        
+        search_pattern = os.path.join(full_path, '**', pattern) if recursive else os.path.join(full_path, pattern)
+        files = glob.glob(search_pattern, recursive=recursive)
+        
+        # 转换为相对路径
+        prefix_len = len(os.path.join(self.data_dir, self.subdirs[data_type]))
+        return [f[prefix_len+1:] for f in files if os.path.isfile(f)]
+    
+    def create_directory(self, data_type: str, dir_path: str) -> bool:
+        """创建目录
+        
+        Args:
+            data_type: 数据类型
+            dir_path: 相对于数据类型目录的路径
+            
+        Returns:
+            bool: 是否成功创建
+        """
+        full_path = self.get_path(data_type, dir_path)
+        try:
+            if not os.path.exists(full_path):
+                os.makedirs(full_path)
+            return True
+        except Exception as e:
+            logger.error(f"创建目录失败 {full_path}: {e}")
+            return False
+    
+    def delete_file(self, data_type: str, file_path: str, backup: bool = True) -> bool:
+        """删除文件
+        
+        Args:
+            data_type: 数据类型
+            file_path: 相对于数据类型目录的文件路径
+            backup: 是否先备份文件
+            
+        Returns:
+            bool: 是否成功删除
+        """
+        full_path = self.get_path(data_type, file_path)
+        if not os.path.exists(full_path):
+            return True
+        
+        # 备份文件
+        if backup:
+            backup_dir = self.get_path('temp', 'backups', data_type)
+            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+            filename = os.path.basename(file_path)
+            backup_path = os.path.join(backup_dir, f"{filename}.{timestamp}.bak")
+            try:
+                shutil.copy2(full_path, backup_path)
+                logger.debug(f"已备份文件: {full_path} -> {backup_path}")
+            except Exception as e:
+                logger.error(f"备份文件失败 {full_path}: {e}")
+        
+        # 删除文件
+        try:
+            os.remove(full_path)
+            return True
+        except Exception as e:
+            logger.error(f"删除文件失败 {full_path}: {e}")
+            return False
+    
+    def cleanup_temp_files(self, days_old: int = 7) -> int:
+        """清理临时文件
+        
+        Args:
+            days_old: 删除多少天前的文件
+            
+        Returns:
+            int: 删除的文件数量
+        """
+        import time
+        
+        temp_dir = self.get_path('temp')
+        if not os.path.exists(temp_dir):
+            return 0
+        
+        now = time.time()
+        cutoff = now - (days_old * 86400)
+        deleted_count = 0
+        
+        for root, dirs, files in os.walk(temp_dir):
+            for file in files:
+                file_path = os.path.join(root, file)
+                # 跳过备份目录
+                if '/backups/' in file_path:
+                    continue
+                    
+                # 检查文件修改时间
+                if os.path.getmtime(file_path) < cutoff:
+                    try:
+                        os.remove(file_path)
+                        deleted_count += 1
+                    except Exception as e:
+                        logger.error(f"删除临时文件失败 {file_path}: {e}")
+        
+        return deleted_count
+
+# 创建单例实例
+data_manager = DataManager()
+
+# 导出便捷函数
+def get_path(data_type: str, *paths: str) -> str:
+    """获取标准数据路径"""
+    return data_manager.get_path(data_type, *paths)
+
+def get_db_path(db_name: str = "simulation_data.db") -> str:
+    """获取数据库文件路径"""
+    return data_manager.get_db_path(db_name)
+
+def get_db_connection(db_name: str = "simulation_data.db") -> sqlite3.Connection:
+    """获取数据库连接"""
+    return data_manager.get_db_connection(db_name)
+
+def load_json(data_type: str, file_path: str) -> Dict:
+    """加载JSON数据"""
+    return data_manager.load_json(data_type, file_path)
+
+def save_json(data: Dict, data_type: str, file_path: str, indent: int = 2, backup: bool = False) -> bool:
+    """保存JSON数据"""
+    return data_manager.save_json(data, data_type, file_path, indent, backup)
+
+def load_yaml(data_type: str, file_path: str) -> Dict:
+    """加载YAML数据"""
+    return data_manager.load_yaml(data_type, file_path)
+
+def save_yaml(data: Dict, data_type: str, file_path: str, backup: bool = False) -> bool:
+    """保存YAML数据"""
+    return data_manager.save_yaml(data, data_type, file_path, backup)
+
+# 导出单例模块
+if __name__ == "__main__":
+    # 测试数据管理器
+    print(f"数据根目录: {data_manager.data_dir}")
+    print(f"数据库路径: {get_db_path()}")
+    
+    # 列出所有标准数据目录
+    for data_type, subdir in data_manager.subdirs.items():
+        print(f"{data_type}: {data_manager.get_path(data_type)}")
+    
+    # 检查数据目录是否已创建
+    for data_type in data_manager.subdirs:
+        path = data_manager.get_path(data_type)
+        exists = os.path.exists(path)
+        print(f"{data_type} 目录{'已' if exists else '未'}创建: {path}")
+
+def setup_logger(name, level=logging.INFO, log_file=None, console=True):
+    """设置日志记录器
+    
+    Args:
+        name: 日志记录器名称
+        level: 日志级别
+        log_file: 日志文件路径
+        console: 是否输出到控制台
+        
+    Returns:
+        logging.Logger: 配置好的日志记录器
+    """
+    logger = logging.getLogger(name)
+    logger.setLevel(level)
+    
+    # 清除现有的处理器
+    logger.handlers = []
+    
+    # 创建格式化器
+    formatter = logging.Formatter('%(asctime)s [%(levelname)s] %(name)s: %(message)s')
+    
+    # 添加控制台处理器
+    if console:
+        console_handler = logging.StreamHandler()
+        console_handler.setLevel(level)
+        console_handler.setFormatter(formatter)
+        logger.addHandler(console_handler)
+    
+    # 添加文件处理器
+    if log_file:
+        # 确保日志目录存在
+        log_dir = os.path.dirname(log_file)
+        if log_dir and not os.path.exists(log_dir):
+            os.makedirs(log_dir, exist_ok=True)
+        
+        file_handler = logging.FileHandler(log_file, encoding='utf-8')
+        file_handler.setLevel(level)
+        file_handler.setFormatter(formatter)
+        logger.addHandler(file_handler)
+    
+    return logger
+
+# 测试日志记录器
+test_logger = setup_logger('test_logger', log_file=get_path('logs', 'test.log'))
+test_logger.info('这是一条测试日志消息')
+print("日志测试完成") 

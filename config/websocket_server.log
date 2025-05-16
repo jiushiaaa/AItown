@@ -1,0 +1,241 @@
+2025-04-17 00:02:05,737 - WebSocketServer - INFO - WebSocket服务器初始化: 0.0.0.0:8765
+2025-04-17 00:02:05,737 - WebSocketServer - INFO - 心跳间隔: 30秒, 连接超时: 60秒
+2025-04-17 00:02:05,737 - WebSocketServer - INFO - 已注册处理器用于消息类型 echo
+2025-04-17 00:02:05,738 - asyncio - DEBUG - Using proactor: IocpProactor
+2025-04-17 00:02:05,738 - WebSocketServer - INFO - 启动WebSocket服务器: 0.0.0.0:8765
+2025-04-17 00:02:05,739 - WebSocketServer - INFO - 启动心跳机制，间隔: 30秒
+2025-04-17 00:02:05,739 - WebSocketServer - INFO - 启动连接超时清理，超时: 60秒
+2025-04-17 00:02:05,739 - websockets.server - INFO - server listening on 0.0.0.0:8765
+2025-04-17 00:02:05,739 - WebSocketServer - INFO - WebSocket服务器已启动: ws://0.0.0.0:8765
+2025-04-17 00:02:05,739 - WebSocketServer - INFO - 服务器配置: ping_interval=20s, ping_timeout=10s, close_timeout=10s, max_size=1048576字节
+2025-04-17 00:02:44,809 - websockets.server - DEBUG - = connection is CONNECTING
+2025-04-17 00:02:44,813 - websockets.server - DEBUG - < GET / HTTP/1.1
+2025-04-17 00:02:44,813 - websockets.server - DEBUG - < User-Agent: websocket-sharp/1.0
+2025-04-17 00:02:44,813 - websockets.server - DEBUG - < Host: localhost:8765
+2025-04-17 00:02:44,814 - websockets.server - DEBUG - < Upgrade: websocket
+2025-04-17 00:02:44,814 - websockets.server - DEBUG - < Connection: Upgrade
+2025-04-17 00:02:44,814 - websockets.server - DEBUG - < Sec-WebSocket-Key: kejhrbrF6lvS2fzK4XB71Q==
+2025-04-17 00:02:44,814 - websockets.server - DEBUG - < Sec-WebSocket-Version: 13
+2025-04-17 00:02:44,816 - websockets.server - DEBUG - > HTTP/1.1 101 Switching Protocols
+2025-04-17 00:02:44,816 - websockets.server - DEBUG - > Upgrade: websocket
+2025-04-17 00:02:44,816 - websockets.server - DEBUG - > Connection: Upgrade
+2025-04-17 00:02:44,816 - websockets.server - DEBUG - > Sec-WebSocket-Accept: gTFoqr6x7gM0ZPBGbPD8r6JPgdI=
+2025-04-17 00:02:44,816 - websockets.server - DEBUG - > Date: Wed, 16 Apr 2025 16:02:44 GMT
+2025-04-17 00:02:44,817 - websockets.server - DEBUG - > Server: Python/3.10 websockets/11.0.3
+2025-04-17 00:02:44,817 - websockets.server - INFO - connection open
+2025-04-17 00:02:44,817 - websockets.server - DEBUG - = connection is OPEN
+2025-04-17 00:02:44,817 - WebSocketServer - INFO - 客户端连接: 8fb97cb1-db56-4f2e-90e0-e60d18e4b712 在路径 /
+2025-04-17 00:02:44,817 - WebSocketServer - INFO - 当前连接数: 1
+2025-04-17 00:02:44,817 - websockets.server - DEBUG - > TEXT '{"type": "welcome", "client_id": "8fb97cb1-db56...e": 1744819364.8172889}' [179 bytes]
+2025-04-17 00:02:44,818 - WebSocketServer - INFO - 已发送欢迎消息到客户端 8fb97cb1-db56-4f2e-90e0-e60d18e4b712
+2025-04-17 00:02:44,828 - websockets.server - DEBUG - < TEXT '{"client_type":"unity"}' [23 bytes]
+2025-04-17 00:02:44,828 - WebSocketServer - INFO - 收到来自客户端 8fb97cb1-db56-4f2e-90e0-e60d18e4b712 的消息: {'client_type': 'unity'}
+2025-04-17 00:02:44,828 - WebSocketServer - INFO - 客户端 8fb97cb1-db56-4f2e-90e0-e60d18e4b712 标识为: unity
+2025-04-17 00:02:44,829 - websockets.server - DEBUG - > TEXT '{"type": "connection_established", "client_id":...e": 1744819364.8288066}' [175 bytes]
+2025-04-17 00:02:44,829 - websockets.server - DEBUG - < TEXT '{"type":"hello","message":"Hello from Unity!"}' [46 bytes]
+2025-04-17 00:02:44,829 - WebSocketServer - INFO - 收到来自客户端 8fb97cb1-db56-4f2e-90e0-e60d18e4b712 的消息: {'type': 'hello', 'message': 'Hello from Unity!'}
+2025-04-17 00:02:44,829 - WebSocketServer - INFO - 处理类型 hello 的消息
+2025-04-17 00:02:44,829 - WebSocketServer - INFO - 收到hello消息: Hello from Unity!
+2025-04-17 00:02:44,829 - websockets.server - DEBUG - > TEXT '{"type": "hello_response", "message": "Hello fr...e": 1744819364.8297946}' [94 bytes]
+2025-04-17 00:02:44,829 - WebSocketServer - INFO - 已回复hello消息 (客户端: 8fb97cb1-db56-4f2e-90e0-e60d18e4b712)
+2025-04-17 00:05:40,533 - WebSocketServer - INFO - WebSocket服务器初始化: 0.0.0.0:8765
+2025-04-17 00:05:40,533 - WebSocketServer - INFO - 心跳间隔: 30秒, 连接超时: 60秒
+2025-04-17 00:05:40,533 - WebSocketServer - INFO - 已注册处理器用于消息类型 echo
+2025-04-17 00:05:40,533 - asyncio - DEBUG - Using proactor: IocpProactor
+2025-04-17 00:05:40,534 - WebSocketServer - INFO - 启动WebSocket服务器: 0.0.0.0:8765
+2025-04-17 00:05:40,535 - WebSocketServer - INFO - 启动心跳机制，间隔: 30秒
+2025-04-17 00:05:40,535 - WebSocketServer - INFO - 启动连接超时清理，超时: 60秒
+2025-04-17 00:05:40,535 - websockets.server - INFO - server listening on 0.0.0.0:8765
+2025-04-17 00:05:40,535 - WebSocketServer - INFO - WebSocket服务器已启动: ws://0.0.0.0:8765
+2025-04-17 00:05:40,536 - WebSocketServer - INFO - 服务器配置: ping_interval=20s, ping_timeout=10s, close_timeout=10s, max_size=1048576字节
+2025-04-17 00:05:53,875 - websockets.server - DEBUG - = connection is CONNECTING
+2025-04-17 00:05:53,880 - websockets.server - DEBUG - < GET / HTTP/1.1
+2025-04-17 00:05:53,880 - websockets.server - DEBUG - < User-Agent: websocket-sharp/1.0
+2025-04-17 00:05:53,880 - websockets.server - DEBUG - < Host: localhost:8765
+2025-04-17 00:05:53,880 - websockets.server - DEBUG - < Upgrade: websocket
+2025-04-17 00:05:53,880 - websockets.server - DEBUG - < Connection: Upgrade
+2025-04-17 00:05:53,880 - websockets.server - DEBUG - < Sec-WebSocket-Key: jfXlsrBbC38UitiyUWYwKw==
+2025-04-17 00:05:53,880 - websockets.server - DEBUG - < Sec-WebSocket-Version: 13
+2025-04-17 00:05:53,881 - websockets.server - DEBUG - > HTTP/1.1 101 Switching Protocols
+2025-04-17 00:05:53,881 - websockets.server - DEBUG - > Upgrade: websocket
+2025-04-17 00:05:53,881 - websockets.server - DEBUG - > Connection: Upgrade
+2025-04-17 00:05:53,881 - websockets.server - DEBUG - > Sec-WebSocket-Accept: I2ILayLMtas1/gex/BBcYXIm5bg=
+2025-04-17 00:05:53,881 - websockets.server - DEBUG - > Date: Wed, 16 Apr 2025 16:05:53 GMT
+2025-04-17 00:05:53,881 - websockets.server - DEBUG - > Server: Python/3.10 websockets/11.0.3
+2025-04-17 00:05:53,882 - websockets.server - INFO - connection open
+2025-04-17 00:05:53,882 - websockets.server - DEBUG - = connection is OPEN
+2025-04-17 00:05:53,882 - WebSocketServer - INFO - 客户端连接: 7c037b3e-e8c2-4b7b-ba12-f799ea8d3557 在路径 /
+2025-04-17 00:05:53,882 - WebSocketServer - INFO - 当前连接数: 1
+2025-04-17 00:05:53,882 - websockets.server - DEBUG - > TEXT '{"type": "welcome", "client_id": "7c037b3e-e8c2...e": 1744819553.8825524}' [179 bytes]
+2025-04-17 00:05:53,882 - WebSocketServer - INFO - 已发送欢迎消息到客户端 7c037b3e-e8c2-4b7b-ba12-f799ea8d3557
+2025-04-17 00:05:53,892 - websockets.server - DEBUG - < TEXT '{"client_type":"unity"}' [23 bytes]
+2025-04-17 00:05:53,892 - WebSocketServer - INFO - 收到来自客户端 7c037b3e-e8c2-4b7b-ba12-f799ea8d3557 的消息: {'client_type': 'unity'}
+2025-04-17 00:05:53,892 - WebSocketServer - INFO - 客户端 7c037b3e-e8c2-4b7b-ba12-f799ea8d3557 标识为: unity
+2025-04-17 00:05:53,892 - websockets.server - DEBUG - > TEXT '{"type": "connection_established", "client_id":...e": 1744819553.8925598}' [175 bytes]
+2025-04-17 00:05:53,893 - websockets.server - DEBUG - < TEXT '{"type":"hello","message":"Hello from Unity!"}' [46 bytes]
+2025-04-17 00:05:53,893 - WebSocketServer - INFO - 收到来自客户端 7c037b3e-e8c2-4b7b-ba12-f799ea8d3557 的消息: {'type': 'hello', 'message': 'Hello from Unity!'}
+2025-04-17 00:05:53,893 - WebSocketServer - INFO - 处理类型 hello 的消息
+2025-04-17 00:05:53,893 - WebSocketServer - INFO - 收到hello消息: Hello from Unity!
+2025-04-17 00:05:53,893 - websockets.server - DEBUG - > TEXT '{"type": "hello_response", "message": "Hello fr...me": 1744819553.893571}' [93 bytes]
+2025-04-17 00:05:53,893 - WebSocketServer - INFO - 已回复hello消息 (客户端: 7c037b3e-e8c2-4b7b-ba12-f799ea8d3557)
+2025-04-17 00:12:04,444 - WebSocketServer - INFO - WebSocket服务器初始化: 0.0.0.0:8765
+2025-04-17 00:12:04,444 - WebSocketServer - INFO - 心跳间隔: 30秒, 连接超时: 60秒
+2025-04-17 00:12:04,444 - WebSocketServer - INFO - 已注册处理器用于消息类型 echo
+2025-04-17 00:12:04,444 - asyncio - DEBUG - Using proactor: IocpProactor
+2025-04-17 00:12:04,445 - WebSocketServer - INFO - 启动WebSocket服务器: 0.0.0.0:8765
+2025-04-17 00:12:04,446 - WebSocketServer - INFO - 启动心跳机制，间隔: 30秒
+2025-04-17 00:12:04,446 - WebSocketServer - INFO - 启动连接超时清理，超时: 60秒
+2025-04-17 00:12:04,446 - websockets.server - INFO - server listening on 0.0.0.0:8765
+2025-04-17 00:12:04,446 - WebSocketServer - INFO - WebSocket服务器已启动: ws://0.0.0.0:8765
+2025-04-17 00:12:04,446 - WebSocketServer - INFO - 服务器配置: ping_interval=20s, ping_timeout=10s, close_timeout=10s, max_size=1048576字节
+2025-04-17 00:12:12,497 - websockets.server - DEBUG - = connection is CONNECTING
+2025-04-17 00:12:12,500 - websockets.server - DEBUG - < GET / HTTP/1.1
+2025-04-17 00:12:12,500 - websockets.server - DEBUG - < User-Agent: websocket-sharp/1.0
+2025-04-17 00:12:12,500 - websockets.server - DEBUG - < Host: localhost:8765
+2025-04-17 00:12:12,501 - websockets.server - DEBUG - < Upgrade: websocket
+2025-04-17 00:12:12,501 - websockets.server - DEBUG - < Connection: Upgrade
+2025-04-17 00:12:12,501 - websockets.server - DEBUG - < Sec-WebSocket-Key: cAXLNhixS490+kfdovX9tQ==
+2025-04-17 00:12:12,501 - websockets.server - DEBUG - < Sec-WebSocket-Version: 13
+2025-04-17 00:12:12,503 - websockets.server - DEBUG - > HTTP/1.1 101 Switching Protocols
+2025-04-17 00:12:12,503 - websockets.server - DEBUG - > Upgrade: websocket
+2025-04-17 00:12:12,503 - websockets.server - DEBUG - > Connection: Upgrade
+2025-04-17 00:12:12,503 - websockets.server - DEBUG - > Sec-WebSocket-Accept: S0ABdSZC+PNIAONBmhXt0Vt0qxc=
+2025-04-17 00:12:12,503 - websockets.server - DEBUG - > Date: Wed, 16 Apr 2025 16:12:12 GMT
+2025-04-17 00:12:12,503 - websockets.server - DEBUG - > Server: Python/3.10 websockets/11.0.3
+2025-04-17 00:12:12,503 - websockets.server - INFO - connection open
+2025-04-17 00:12:12,503 - websockets.server - DEBUG - = connection is OPEN
+2025-04-17 00:12:12,504 - WebSocketServer - INFO - 客户端连接: 5bfa3bb2-c18c-41ac-8f20-3964c9e0d7ab 在路径 /
+2025-04-17 00:12:12,504 - WebSocketServer - INFO - 当前连接数: 1
+2025-04-17 00:12:12,504 - websockets.server - DEBUG - > TEXT '{"type": "welcome", "client_id": "5bfa3bb2-c18c...e": 1744819932.5040922}' [179 bytes]
+2025-04-17 00:12:12,504 - WebSocketServer - INFO - 已发送欢迎消息到客户端 5bfa3bb2-c18c-41ac-8f20-3964c9e0d7ab
+2025-04-17 00:12:12,512 - websockets.server - DEBUG - < TEXT '{"client_type":"unity"}' [23 bytes]
+2025-04-17 00:12:12,512 - websockets.server - DEBUG - < TEXT '{"type":"hello","message":"Hello from Unity!"}' [46 bytes]
+2025-04-17 00:12:12,512 - WebSocketServer - INFO - 收到来自客户端 5bfa3bb2-c18c-41ac-8f20-3964c9e0d7ab 的消息: {'client_type': 'unity'}
+2025-04-17 00:12:12,513 - WebSocketServer - INFO - 客户端 5bfa3bb2-c18c-41ac-8f20-3964c9e0d7ab 标识为: unity
+2025-04-17 00:12:12,513 - websockets.server - DEBUG - > TEXT '{"type": "connection_established", "client_id":...me": 1744819932.513608}' [174 bytes]
+2025-04-17 00:12:12,513 - WebSocketServer - INFO - 收到来自客户端 5bfa3bb2-c18c-41ac-8f20-3964c9e0d7ab 的消息: {'type': 'hello', 'message': 'Hello from Unity!'}
+2025-04-17 00:12:12,513 - WebSocketServer - INFO - 处理类型 hello 的消息
+2025-04-17 00:12:12,513 - WebSocketServer - INFO - 收到hello消息: Hello from Unity!
+2025-04-17 00:12:12,513 - websockets.server - DEBUG - > TEXT '{"type": "hello_response", "message": "Hello fr...me": 1744819932.513608}' [93 bytes]
+2025-04-17 00:12:12,513 - WebSocketServer - INFO - 已回复hello消息 (客户端: 5bfa3bb2-c18c-41ac-8f20-3964c9e0d7ab)
+2025-04-17 00:22:57,616 - WebSocketServer - INFO - WebSocket服务器初始化: 0.0.0.0:8765
+2025-04-17 00:22:57,616 - WebSocketServer - INFO - 心跳间隔: 30秒, 连接超时: 60秒
+2025-04-17 00:22:57,616 - WebSocketServer - INFO - 已注册处理器用于消息类型 echo
+2025-04-17 00:22:57,616 - asyncio - DEBUG - Using proactor: IocpProactor
+2025-04-17 00:22:57,617 - WebSocketServer - INFO - 启动WebSocket服务器: 0.0.0.0:8765
+2025-04-17 00:22:57,618 - WebSocketServer - INFO - 启动心跳机制，间隔: 30秒
+2025-04-17 00:22:57,618 - WebSocketServer - INFO - 启动连接超时清理，超时: 60秒
+2025-04-17 00:22:57,618 - websockets.server - INFO - server listening on 0.0.0.0:8765
+2025-04-17 00:22:57,618 - WebSocketServer - INFO - WebSocket服务器已启动: ws://0.0.0.0:8765
+2025-04-17 00:22:57,618 - WebSocketServer - INFO - 服务器配置: ping_interval=20s, ping_timeout=10s, close_timeout=10s, max_size=1048576字节
+2025-04-17 00:23:11,095 - websockets.server - DEBUG - = connection is CONNECTING
+2025-04-17 00:23:11,097 - websockets.server - DEBUG - < GET / HTTP/1.1
+2025-04-17 00:23:11,097 - websockets.server - DEBUG - < User-Agent: websocket-sharp/1.0
+2025-04-17 00:23:11,097 - websockets.server - DEBUG - < Host: localhost:8765
+2025-04-17 00:23:11,097 - websockets.server - DEBUG - < Upgrade: websocket
+2025-04-17 00:23:11,097 - websockets.server - DEBUG - < Connection: Upgrade
+2025-04-17 00:23:11,097 - websockets.server - DEBUG - < Sec-WebSocket-Key: XZR/iz5HkGmuIYus3id53g==
+2025-04-17 00:23:11,097 - websockets.server - DEBUG - < Sec-WebSocket-Version: 13
+2025-04-17 00:23:11,098 - websockets.server - DEBUG - > HTTP/1.1 101 Switching Protocols
+2025-04-17 00:23:11,099 - websockets.server - DEBUG - > Upgrade: websocket
+2025-04-17 00:23:11,099 - websockets.server - DEBUG - > Connection: Upgrade
+2025-04-17 00:23:11,099 - websockets.server - DEBUG - > Sec-WebSocket-Accept: FHT2gw0JLRfHxyLy62qlxlPyn7k=
+2025-04-17 00:23:11,099 - websockets.server - DEBUG - > Date: Wed, 16 Apr 2025 16:23:11 GMT
+2025-04-17 00:23:11,099 - websockets.server - DEBUG - > Server: Python/3.10 websockets/11.0.3
+2025-04-17 00:23:11,099 - websockets.server - INFO - connection open
+2025-04-17 00:23:11,099 - websockets.server - DEBUG - = connection is OPEN
+2025-04-17 00:23:11,099 - WebSocketServer - INFO - 客户端连接: 7af35108-7b70-4edc-b155-9dc0e8222ee9 在路径 /
+2025-04-17 00:23:11,099 - WebSocketServer - INFO - 当前连接数: 1
+2025-04-17 00:23:11,099 - websockets.server - DEBUG - > TEXT '{"type": "welcome", "client_id": "7af35108-7b70...me": 1744820591.099797}' [178 bytes]
+2025-04-17 00:23:11,100 - WebSocketServer - INFO - 已发送欢迎消息到客户端 7af35108-7b70-4edc-b155-9dc0e8222ee9
+2025-04-17 00:23:11,109 - websockets.server - DEBUG - < TEXT '{"client_type":"unity"}' [23 bytes]
+2025-04-17 00:23:11,109 - WebSocketServer - INFO - 收到来自客户端 7af35108-7b70-4edc-b155-9dc0e8222ee9 的消息: {'client_type': 'unity'}
+2025-04-17 00:23:11,109 - WebSocketServer - INFO - 客户端 7af35108-7b70-4edc-b155-9dc0e8222ee9 标识为: unity
+2025-04-17 00:23:11,109 - websockets.server - DEBUG - > TEXT '{"type": "connection_established", "client_id":...e": 1744820591.1093152}' [175 bytes]
+2025-04-17 00:23:11,110 - websockets.server - DEBUG - < TEXT '{"type":"hello","message":"Hello from Unity!"}' [46 bytes]
+2025-04-17 00:23:11,110 - WebSocketServer - INFO - 收到来自客户端 7af35108-7b70-4edc-b155-9dc0e8222ee9 的消息: {'type': 'hello', 'message': 'Hello from Unity!'}
+2025-04-17 00:23:11,110 - WebSocketServer - INFO - 处理类型 hello 的消息
+2025-04-17 00:23:11,110 - WebSocketServer - INFO - 收到hello消息: Hello from Unity!
+2025-04-17 00:23:11,110 - websockets.server - DEBUG - > TEXT '{"type": "hello_response", "message": "Hello fr...me": 1744820591.110316}' [93 bytes]
+2025-04-17 00:23:11,110 - WebSocketServer - INFO - 已回复hello消息 (客户端: 7af35108-7b70-4edc-b155-9dc0e8222ee9)
+2025-04-17 00:28:00,815 - WebSocketServer - INFO - WebSocket服务器初始化: 0.0.0.0:8765
+2025-04-17 00:28:00,815 - WebSocketServer - INFO - 心跳间隔: 30秒, 连接超时: 60秒
+2025-04-17 00:28:00,815 - WebSocketServer - INFO - 已注册处理器用于消息类型 echo
+2025-04-17 00:28:00,815 - asyncio - DEBUG - Using proactor: IocpProactor
+2025-04-17 00:28:00,816 - WebSocketServer - INFO - 启动WebSocket服务器: 0.0.0.0:8765
+2025-04-17 00:28:00,816 - WebSocketServer - INFO - 启动心跳机制，间隔: 30秒
+2025-04-17 00:28:00,816 - WebSocketServer - INFO - 启动连接超时清理，超时: 60秒
+2025-04-17 00:28:00,816 - websockets.server - INFO - server listening on 0.0.0.0:8765
+2025-04-17 00:28:00,817 - WebSocketServer - INFO - WebSocket服务器已启动: ws://0.0.0.0:8765
+2025-04-17 00:28:00,817 - WebSocketServer - INFO - 服务器配置: ping_interval=20s, ping_timeout=10s, close_timeout=10s, max_size=1048576字节
+2025-04-17 00:28:29,962 - websockets.server - DEBUG - = connection is CONNECTING
+2025-04-17 00:28:29,967 - websockets.server - DEBUG - < GET / HTTP/1.1
+2025-04-17 00:28:29,967 - websockets.server - DEBUG - < User-Agent: websocket-sharp/1.0
+2025-04-17 00:28:29,967 - websockets.server - DEBUG - < Host: localhost:8765
+2025-04-17 00:28:29,968 - websockets.server - DEBUG - < Upgrade: websocket
+2025-04-17 00:28:29,968 - websockets.server - DEBUG - < Connection: Upgrade
+2025-04-17 00:28:29,968 - websockets.server - DEBUG - < Sec-WebSocket-Key: m3BzPyMQY81BFKIDouv9MQ==
+2025-04-17 00:28:29,968 - websockets.server - DEBUG - < Sec-WebSocket-Version: 13
+2025-04-17 00:28:29,971 - websockets.server - DEBUG - > HTTP/1.1 101 Switching Protocols
+2025-04-17 00:28:29,971 - websockets.server - DEBUG - > Upgrade: websocket
+2025-04-17 00:28:29,971 - websockets.server - DEBUG - > Connection: Upgrade
+2025-04-17 00:28:29,971 - websockets.server - DEBUG - > Sec-WebSocket-Accept: +OBnR+PE6yQ3slI96W6miPIpRrc=
+2025-04-17 00:28:29,971 - websockets.server - DEBUG - > Date: Wed, 16 Apr 2025 16:28:29 GMT
+2025-04-17 00:28:29,972 - websockets.server - DEBUG - > Server: Python/3.10 websockets/11.0.3
+2025-04-17 00:28:29,972 - websockets.server - INFO - connection open
+2025-04-17 00:28:29,972 - websockets.server - DEBUG - = connection is OPEN
+2025-04-17 00:28:29,972 - WebSocketServer - INFO - 客户端连接: fcde236a-f264-4b52-b612-e82b27ea89c3 在路径 /
+2025-04-17 00:28:29,972 - WebSocketServer - INFO - 当前连接数: 1
+2025-04-17 00:28:29,973 - websockets.server - DEBUG - > TEXT '{"type": "welcome", "client_id": "fcde236a-f264...e": 1744820909.9736779}' [179 bytes]
+2025-04-17 00:28:29,974 - WebSocketServer - INFO - 已发送欢迎消息到客户端 fcde236a-f264-4b52-b612-e82b27ea89c3
+2025-04-17 00:28:29,981 - websockets.server - DEBUG - < TEXT '{"client_type":"unity"}' [23 bytes]
+2025-04-17 00:28:29,982 - WebSocketServer - INFO - 收到来自客户端 fcde236a-f264-4b52-b612-e82b27ea89c3 的消息: {'client_type': 'unity'}
+2025-04-17 00:28:29,982 - WebSocketServer - INFO - 客户端 fcde236a-f264-4b52-b612-e82b27ea89c3 标识为: unity
+2025-04-17 00:28:29,982 - websockets.server - DEBUG - > TEXT '{"type": "connection_established", "client_id":...me": 1744820909.982204}' [174 bytes]
+2025-04-17 00:28:29,982 - websockets.server - DEBUG - < TEXT '{"type":"hello","message":"Hello from Unity!"}' [46 bytes]
+2025-04-17 00:28:29,982 - WebSocketServer - INFO - 收到来自客户端 fcde236a-f264-4b52-b612-e82b27ea89c3 的消息: {'type': 'hello', 'message': 'Hello from Unity!'}
+2025-04-17 00:28:29,982 - WebSocketServer - INFO - 处理类型 hello 的消息
+2025-04-17 00:28:29,982 - WebSocketServer - INFO - 收到hello消息: Hello from Unity!
+2025-04-17 00:28:29,983 - websockets.server - DEBUG - > TEXT '{"type": "hello_response", "message": "Hello fr...me": 1744820909.983708}' [93 bytes]
+2025-04-17 00:28:29,983 - WebSocketServer - INFO - 已回复hello消息 (客户端: fcde236a-f264-4b52-b612-e82b27ea89c3)
+2025-04-17 00:28:30,832 - websockets.server - DEBUG - > TEXT '{"type": "heartbeat", "server_time": 1744820910.8321397}' [56 bytes]
+2025-04-17 00:28:34,178 - WebSocketServer - INFO - WebSocket服务器初始化: 0.0.0.0:8765
+2025-04-17 00:28:34,178 - WebSocketServer - INFO - 心跳间隔: 30秒, 连接超时: 60秒
+2025-04-17 00:28:34,178 - WebSocketServer - INFO - 已注册处理器用于消息类型 echo
+2025-04-17 00:28:34,178 - asyncio - DEBUG - Using proactor: IocpProactor
+2025-04-17 00:28:34,180 - WebSocketServer - INFO - 启动WebSocket服务器: 0.0.0.0:8765
+2025-04-17 00:28:34,180 - WebSocketServer - INFO - 启动心跳机制，间隔: 30秒
+2025-04-17 00:28:34,180 - WebSocketServer - INFO - 启动连接超时清理，超时: 60秒
+2025-04-17 00:28:34,181 - WebSocketServer - ERROR - 启动WebSocket服务器出错: [Errno 10048] error while attempting to bind on address ('0.0.0.0', 8765): 通常每个套接字地址(协议/网络地址/端口)只允许使用一次。
+2025-04-17 00:28:34,201 - WebSocketServer - ERROR - Traceback (most recent call last):
+  File "D:\AI\AItown\PaddlePaddle\config\websocket_server.py", line 400, in start_server
+    self.server = await websockets.serve(
+  File "C:\Users\C2023\.conda\envs\paddlepaddle\lib\site-packages\websockets\legacy\server.py", line 1127, in __await_impl__
+    server = await self._create_server()
+  File "C:\Users\C2023\.conda\envs\paddlepaddle\lib\asyncio\base_events.py", line 1519, in create_server
+    raise OSError(err.errno, 'error while attempting '
+OSError: [Errno 10048] error while attempting to bind on address ('0.0.0.0', 8765): 通常每个套接字地址(协议/网络地址/端口)只允许使用一次。
+
+2025-04-17 00:28:49,981 - websockets.server - DEBUG - % sending keepalive ping
+2025-04-17 00:28:49,981 - websockets.server - DEBUG - > PING 8e 27 f8 5c [binary, 4 bytes]
+2025-04-17 00:28:49,986 - websockets.server - DEBUG - < PONG 8e 27 f8 5c [binary, 4 bytes]
+2025-04-17 00:28:49,986 - websockets.server - DEBUG - % received keepalive pong
+2025-04-17 00:28:54,609 - WebSocketServer - INFO - 服务器被用户中断
+2025-04-17 00:28:54,609 - asyncio - ERROR - Task was destroyed but it is pending!
+task: <Task pending name='Task-6' coro=<IocpProactor.accept.<locals>.accept_coro() running at C:\Users\C2023\.conda\envs\paddlepaddle\lib\asyncio\windows_events.py:580> wait_for=<_OverlappedFuture cancelled>>
+2025-04-17 00:28:54,614 - asyncio - ERROR - Task was destroyed but it is pending!
+task: <Task pending name='Task-2' coro=<WebSocketServer.heartbeat_sender() running at D:\AI\AItown\PaddlePaddle\config\websocket_server.py:365> wait_for=<Future cancelled>>
+2025-04-17 00:28:54,615 - asyncio - ERROR - Task was destroyed but it is pending!
+task: <Task pending name='Task-3' coro=<WebSocketServer.connection_cleanup() running at D:\AI\AItown\PaddlePaddle\config\websocket_server.py:387> wait_for=<Future cancelled>>
+2025-04-17 00:28:54,615 - asyncio - ERROR - Task was destroyed but it is pending!
+task: <Task pending name='Task-7' coro=<WebSocketServerProtocol.handler() running at C:\Users\C2023\.conda\envs\paddlepaddle\lib\site-packages\websockets\legacy\server.py:240> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+2025-04-17 00:28:54,615 - asyncio - ERROR - Task was destroyed but it is pending!
+task: <Task pending name='Task-8' coro=<WebSocketCommonProtocol.transfer_data() running at C:\Users\C2023\.conda\envs\paddlepaddle\lib\site-packages\websockets\legacy\protocol.py:959> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[Task.task_wakeup(), _wait.<locals>._on_completion() at C:\Users\C2023\.conda\envs\paddlepaddle\lib\asyncio\tasks.py:475]>
+2025-04-17 00:28:54,615 - asyncio - ERROR - Task was destroyed but it is pending!
+task: <Task pending name='Task-9' coro=<WebSocketCommonProtocol.keepalive_ping() running at C:\Users\C2023\.conda\envs\paddlepaddle\lib\site-packages\websockets\legacy\protocol.py:1250> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+2025-04-17 00:28:54,615 - asyncio - ERROR - Task was destroyed but it is pending!
+task: <Task pending name='Task-10' coro=<WebSocketCommonProtocol.close_connection() running at C:\Users\C2023\.conda\envs\paddlepaddle\lib\site-packages\websockets\legacy\protocol.py:1302> wait_for=<Task pending name='Task-8' coro=<WebSocketCommonProtocol.transfer_data() running at C:\Users\C2023\.conda\envs\paddlepaddle\lib\site-packages\websockets\legacy\protocol.py:959> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[Task.task_wakeup(), _wait.<locals>._on_completion() at C:\Users\C2023\.conda\envs\paddlepaddle\lib\asyncio\tasks.py:475]>>
+2025-04-17 00:28:54,615 - WebSocketServer - DEBUG - 关闭连接时出错: no running event loop
+2025-04-17 00:28:54,615 - WebSocketServer - INFO - 客户端 fcde236a-f264-4b52-b612-e82b27ea89c3 (unity) 连接已清理
+2025-04-17 00:28:54,615 - websockets.server - INFO - connection closed
+2025-04-17 00:28:54,615 - websockets.server - DEBUG - x closing TCP connection

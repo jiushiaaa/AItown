@@ -1,0 +1,102 @@
+# 正山堂茶业统一配置文件
+
+# 服务地址配置
+services:
+  # erniebot服务配置
+  erniebot:
+    host: 127.0.0.1
+    port: 12339
+    debug: false
+    # AI模型配置
+    model:
+      # api_key: "YOUR_ERNIE_API_KEY"  # 文心一言API密钥 - 推荐通过 .env 文件设置 AI_API_KEY
+      base_url: "https://aistudio.baidu.com/llm/lmapi/v3"  # 星河大模型 API 地址
+      model_name: "ernie-4.0-turbo-128k"  # 使用文心一言ERNIE 4.0模型
+      temperature: 0.7
+      request_timeout: 60  # 添加请求超时设置
+      request_interval: 3  # 添加请求间隔时间
+      max_retries: 3  # 添加最大重试次数
+      retry_interval: 5  # 添加重试间隔
+      connect_timeout: 15  # 添加连接超时
+      read_timeout: 90  # 添加读取超时
+      write_timeout: 30  # 添加写入超时
+      max_retry_interval: 60  # 添加最大重试间隔
+      retry_codes: [408, 429, 500, 502, 503, 504]  # 添加重试状态码
+      cache_enabled: true  # 添加是否启用缓存
+      cache_time: 3600  # 添加缓存有效期
+      batch_size: 5  # 添加批处理大小
+      batch_count: 4  # 添加批处理数量
+      simplified_prompt: false  # 添加是否使用简化提示
+    # 数据库配置
+    database:
+      path: "simulation_data.db"
+    # WebSocket配置
+    websocket:
+      host: 127.0.0.1
+      port: 8765
+      enable_legacy: true  # 是否启用传统Socket兼容模式
+  
+  # data_api服务配置
+  data_api:
+    host: 127.0.0.1
+    port: 5000
+    debug: false
+    # CORS设置
+    cors:
+      origins: ["*"]
+    # WebSocket配置
+    websocket:
+      host: 127.0.0.1
+      port: 8766
+      enable_rest: true  # 是否同时启用REST API
+  
+  # tea-analytics-dashboard前端配置
+  dashboard:
+    api_base_url: "http://127.0.0.1:5000"
+    websocket_url: "ws://127.0.0.1:8766"  # data_api的WebSocket地址
+    auto_refresh: true
+    refresh_interval: 30000  # 毫秒
+  
+  # Unity前端配置
+  unity:
+    socket_server:
+      host: 127.0.0.1
+      port: 12339
+    websocket:
+      url: "ws://127.0.0.1:8765"  # erniebot的WebSocket地址
+    # Unity特定配置
+    settings:
+      animation_speed: 1.0
+      debug_mode: false
+
+# WebSocket通信配置
+websocket:
+  server:
+    host: "0.0.0.0"
+    port: 8765
+    max_message_size: 1048576  # 1MB
+    heartbeat_interval: 30
+    connection_timeout: 60
+    max_retries: 3
+    retry_delay: 1.0
+    
+  client:
+    url: "ws://127.0.0.1:8765"
+    auto_reconnect: true
+    reconnect_interval: 5
+    max_reconnect_attempts: 10
+    heartbeat_interval: 30
+    connection_timeout: 60
+    
+  unity:
+    server_url: "ws://127.0.0.1:8765"
+    auto_reconnect: true
+    reconnect_timeout: 5
+    max_reconnect_attempts: 10
+    heartbeat_interval: 30
+    connection_timeout: 60
+
+# 通用配置
+common:
+  log_level: "info"  # debug, info, warning, error
+  data_dir: "../data"

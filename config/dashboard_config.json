@@ -1,0 +1,16 @@
+{
+  "api": {
+    "baseUrl": "http://127.0.0.1:5000",
+    "timeout": 10000
+  },
+  "ui": {
+    "autoRefresh": true,
+    "refreshInterval": 30000,
+    "defaultDateRange": 7,
+    "theme": "light"
+  },
+  "debug": {
+    "enabled": false,
+    "logLevel": "error"
+  }
+} 

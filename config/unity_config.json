@@ -1,0 +1,10 @@
+{
+  "server": {
+    "ip": "127.0.0.1",
+    "port": 12339
+  },
+  "debug": {
+    "enableLogging": true,
+    "enableDebugUI": false
+  }
+} 

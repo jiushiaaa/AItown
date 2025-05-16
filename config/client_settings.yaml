@@ -1,0 +1,117 @@
+# WebSocket客户端配置
+connection:
+  # 服务器连接信息
+  server_url: "ws://127.0.0.1:8765"
+  reconnect: true
+  reconnect_interval: 5  # 秒
+  max_reconnect_attempts: 10
+  
+  # 连接超时设置
+  connect_timeout: 30  # 秒
+  request_timeout: 60  # 秒
+  
+  # 心跳设置
+  heartbeat_interval: 25  # 秒
+  heartbeat_timeout: 5  # 秒
+  
+  # 代理设置
+  use_proxy: false
+  # proxy_url: "http://proxy.example.com:8080"
+  
+  # 安全设置
+  verify_ssl: true
+  # client_cert: "path/to/client.pem"
+  # client_key: "path/to/client_key.pem"
+
+# 认证设置
+authentication:
+  enabled: false
+  method: "token"  # token, basic, oauth
+  # token: ""
+  # username: ""
+  # password: ""
+  # oauth_client_id: ""
+  # oauth_client_secret: ""
+  # oauth_token_url: ""
+
+# 消息处理
+messaging:
+  # 消息格式化
+  default_format: "json"  # json, text, binary
+  compress_messages: false
+  compression_threshold: 1024  # 字节
+  
+  # 消息重试
+  retry_failed_messages: true
+  max_retries: 3
+  retry_delay: 2  # 秒
+  
+  # 消息缓存
+  cache_messages: true
+  cache_size: 100  # 消息数
+  
+  # 消息队列
+  queue_outgoing: true
+  max_queue_size: 50
+  
+# 功能设置
+features:
+  # 自动重连
+  auto_reconnect: true
+  
+  # 订阅设置
+  subscriptions:
+    auto_resubscribe: true
+    channels:
+      - "tea_updates"
+      - "user_events"
+    
+  # 批处理
+  batch_processing:
+    enabled: false
+    batch_size: 10
+    max_batch_delay: 1.0  # 秒
+  
+  # 数据同步
+  data_sync:
+    enabled: true
+    sync_interval: 300  # 秒
+    sync_on_connect: true
+    sync_on_disconnect: true
+
+# 存储设置
+storage:
+  # 本地存储
+  persist_data: true
+  storage_path: "data/client"
+  
+  # 会话存储
+  save_session: true
+  session_file: "session.json"
+  
+  # 离线缓存
+  offline_cache:
+    enabled: true
+    max_size: 10485760  # 10MB
+    expiry: 86400  # 24小时
+
+# 日志设置
+logging:
+  enabled: true
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  file: "logs/websocket_client.log"
+  format: "{asctime} - {name} - {levelname} - {message}"
+  rotation: true
+  max_size: 5242880  # 5MB
+  backup_count: 3
+  
+  # 性能日志
+  log_performance: false
+  log_traffic: false
+
+# 开发设置
+development:
+  debug: true
+  mock_server: false
+  # mock_server_url: "ws://localhost:8766"
+  hot_reload: true 

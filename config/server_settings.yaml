@@ -1,0 +1,93 @@
+# WebSocket服务器配置
+server:
+  # 服务器地址和端口
+  host: "127.0.0.1"
+  port: 8767
+  
+  # 连接设置
+  max_connections: 100
+  connection_timeout: 60  # 秒
+  ping_interval: 30  # 秒
+  ping_timeout: 10  # 秒
+  
+  # 安全设置
+  use_ssl: false
+  # 如果启用SSL，需要提供证书路径
+  # ssl_cert: "path/to/cert.pem"
+  # ssl_key: "path/to/key.pem"
+  
+  # 访问控制
+  allow_origin: "*"  # CORS设置
+  require_auth: false  # 是否需要身份验证
+  
+  # 性能设置
+  max_message_size: 1048576  # 1MB
+  max_queue_size: 100  # 每个连接的最大待处理消息队列
+  
+# 数据存储配置
+storage:
+  # 会话存储
+  session_dir: "data/sessions"
+  session_expiry: 86400  # 24小时
+  
+  # 消息存储
+  message_dir: "data/messages"
+  message_backup_count: 100  # 每个客户端保留的最大消息数
+  
+  # 日志配置
+  log_dir: "logs/websocket"
+  log_level: "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  log_format: "{asctime} - {name} - {levelname} - {message}"
+  log_rotation: true
+  log_max_size: 10485760  # 10MB
+  log_backup_count: 5
+
+# 功能配置
+features:
+  # 消息类型处理器
+  handlers:
+    query: true
+    save: true
+    log: true
+    broadcast: true
+    subscribe: true
+    
+  # 广播设置
+  broadcast:
+    allow_client_broadcast: false  # 是否允许客户端发起广播
+    max_broadcast_rate: 10  # 每分钟最大广播次数
+    
+  # 订阅设置
+  subscribe:
+    channels:
+      - "tea_updates"
+      - "system_notifications"
+      - "user_events"
+    max_subscriptions: 5  # 每个客户端最大订阅数
+
+# 集成配置
+integrations:
+  # 数据库集成
+  database:
+    enabled: false
+    # connection_string: "sqlite:///data/websocket.db"
+    
+  # 消息队列集成
+  message_queue:
+    enabled: false
+    # provider: "redis"
+    # connection: "redis://localhost:6379/0"
+    
+  # 监控集成
+  monitoring:
+    enabled: false
+    # prometheus_endpoint: "/metrics"
+    # statsd_host: "localhost"
+    # statsd_port: 8125
+
+# 开发设置
+development:
+  debug_mode: true
+  verbose_logging: true
+  mock_data: true  # 是否使用模拟数据
+  hot_reload: true  # 是否支持热重载 
