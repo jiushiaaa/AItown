@@ -126,3 +126,8 @@ npm run serve
 - **前端技术**: Vue.js, Element UI, ECharts, WebGL
 - **3D可视化**: Unity, C#, NavMeshAgent
 - **数据通信**: WebSocket, RESTful API, JSON
+
+## 本地部署的前端网页样式
+![图片1](image/1.png)
+![图片2](image/2.png)
+![图片3](image/3.png)
