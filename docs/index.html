@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基于多Agent协同的茶产品智能营销系统</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">
+    <link rel="stylesheet" href="TemplateData/admin-style.css">
+    <script>
+      // 增加JavaScript堆栈大小，解决Maximum call stack size exceeded错误
+      var oldLimit = Error.stackTraceLimit;
+      Error.stackTraceLimit = 50;
+    </script>
+    <style>
+      /* 侧边栏图标样式 */
+      .sidebar-menu .icon-placeholder {
+        margin-right: 8px;
+        display: inline-block !important;
+        width: 16px;
+        height: 16px;
+        text-align: center;
+        font-style: normal;
+        visibility: visible !important;
+        opacity: 1 !important;
+      }
+
+      /* 每个图标的独特样式 */
+      .icon-simulation:before {
+        content: "🏭"; /* 工厂/模拟 */
+      }
+
+      .icon-settings:before {
+        content: "⚙️"; /* 齿轮/设置 */
+      }
+
+      .icon-dashboard:before {
+        content: "📊"; /* 图表/仪表盘 */
+      }
+
+      .icon-user:before {
+        content: "👤"; /* 用户/人物 */
+      }
+
+      .icon-location:before {
+        content: "🗺️"; /* 地图/地址 */
+      }
+
+      .icon-opportunity:before {
+        content: "🔍"; /* 放大镜/分析 */
+      }
+
+      .icon-idea:before {
+        content: "💡"; /* 灯泡/创意 */
+      }
+      
+      /* 确保Unity内容正确显示 */
+      .main-content {
+        position: relative;
+        flex: 1;
+        padding: 20px;
+        overflow: auto;
+        height: calc(100vh - 60px);
+      }
+      
+      #unity-container {
+        width: 100%;
+        height: 100%;
+        position: relative;
+      }
+      
+      #unity-canvas {
+        width: 100%;
+        height: 100%;
+        background: #231F20;
+      }
+
+      /* 命令行控制面板样式 */
+      .command-panel {
+        position: absolute;
+        left: 20px;  /* 从右下角改为左下角 */
+        bottom: 20px;
+        width: 380px;
+        background-color: rgba(22, 28, 36, 0.9);
+        color: white;
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+        z-index: 1000;
+        font-family: 'Microsoft YaHei', sans-serif;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        overflow: hidden;
+      }
+
+      .command-panel-header {
+        display: flex;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        background-color: rgba(30, 38, 50, 1);
+      }
+
+      .command-panel-tab {
+        padding: 10px 18px;
+        cursor: pointer;
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 14px;
+        transition: all 0.2s ease;
+      }
+
+      .command-panel-tab.active {
+        background-color: rgba(45, 55, 72, 1);
+        border-bottom: 2px solid #4e8ed0;
+      }
+
+      .command-panel-tab:hover:not(.active) {
+        background-color: rgba(40, 49, 64, 1);
+      }
+
+      .command-panel-content {
+        min-height: 220px;
+        max-height: 320px;
+        padding: 0;
+      }
+
+      .panel-section {
+        display: none;
+        padding: 15px;
+      }
+
+      .panel-section.active {
+        display: block;
+      }
+
+      .command-button-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 15px;
+      }
+
+      .command-button {
+        background-color: #4361ee;
+        border: none;
+        color: white;
+        padding: 8px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 13px;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        letter-spacing: 0.5px;
+      }
+
+      .command-button:hover {
+        background-color: #3a56d4;
+        transform: translateY(-1px);
+      }
+
+      .command-input-group {
+        display: flex;
+        margin-top: 12px;
+        border-radius: 6px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      }
+
+      .command-input {
+        flex: 1;
+        padding: 10px 12px;
+        background-color: #2d3748;
+        border: 1px solid #4a5568;
+        border-right: none;
+        color: white;
+        font-size: 13px;
+      }
+
+      .command-input:focus {
+        outline: none;
+        border-color: #4e8ed0;
+      }
+
+      .send-button {
+        padding: 10px 15px;
+        background-color: #38b2ac;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.2s ease;
+      }
+
+      .send-button:hover {
+        background-color: #319795;
+      }
+
+      .log-area {
+        margin-top: 15px;
+        padding: 10px;
+        height: 160px;
+        overflow-y: auto;
+        background-color: #1a202c;
+        font-family: 'Consolas', 'Monaco', monospace;
+        font-size: 12px;
+        line-height: 1.6;
+        white-space: pre-wrap;
+        color: #e2e8f0;
+        border-radius: 6px;
+        border: 1px solid #2d3748;
+      }
+
+      .log-entry {
+        margin: 3px 0;
+        padding-left: 5px;
+        border-left: 3px solid transparent;
+      }
+
+      .log-entry.info {
+        color: #63b3ed;
+        border-left-color: #4299e1;
+      }
+
+      .log-entry.warning {
+        color: #fbd38d;
+        border-left-color: #ed8936;
+      }
+
+      .log-entry.error {
+        color: #feb2b2;
+        border-left-color: #e53e3e;
+      }
+
+      .connection-info {
+        background-color: #2d3748;
+        padding: 12px;
+        border-radius: 6px;
+        margin-bottom: 15px;
+      }
+
+      .connection-info p {
+        margin: 8px 0;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .connection-info span {
+        padding: 4px 8px;
+        background-color: #1a202c;
+        border-radius: 4px;
+      }
+
+      .status-connected {
+        color: #68d391;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 顶部导航栏 -->
+    <header class="header">
+      <div class="header-menu-toggle">☰</div>
+      <div class="system-logo">
+        茶产品智能营销系统
+      </div>
+      <div class="welcome-text">欢迎 超级管理员</div>
+      <div class="header-buttons">
+        <button class="header-btn" id="changePasswordBtn">
+          <i class="icon-placeholder icon-user"></i> 修改密码
+        </button>
+        <button class="header-btn logout-btn" onclick="logout()">
+          <i class="icon-placeholder icon-logout"></i> 退出系统
+        </button>
+      </div>
+    </header>
+
+    <!-- 左侧边栏 -->
+    <nav class="sidebar">
+      <ul class="sidebar-menu">
+        <li class="sidebar-item">
+          <a href="index.html" class="sidebar-link active">
+            <i class="icon-placeholder icon-simulation"></i>
+            仿真模拟系统
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="model-config.html" class="sidebar-link">
+            <i class="icon-placeholder icon-settings"></i>
+            模型配置
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="analytics/dashboard.html" class="sidebar-link">
+            <i class="icon-placeholder icon-dashboard"></i>
+            数据概览
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="analytics/consumer.html" class="sidebar-link">
+            <i class="icon-placeholder icon-user"></i>
+            消费者分析
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="analytics/region.html" class="sidebar-link">
+            <i class="icon-placeholder icon-location"></i>
+            地域分析
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="analytics/psychology.html" class="sidebar-link">
+            <i class="icon-placeholder icon-opportunity"></i>
+            消费心理分析
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="analytics/marketing.html" class="sidebar-link">
+            <i class="icon-placeholder icon-idea"></i>
+            营销策略
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- 主内容区域 -->
+    <main class="main-content">
+      <div id="unity-container" class="unity-desktop">
+        <canvas id="unity-canvas"></canvas>
+        <div id="unity-loading-bar">
+          <div id="unity-logo"></div>
+          <div id="unity-progress-bar-empty">
+            <div id="unity-progress-bar-full"></div>
+          </div>
+        </div>
+        <div id="unity-warning"> </div>
+        <div id="unity-footer">
+          <div id="unity-webgl-logo"></div>
+          <div id="unity-fullscreen-button"></div>
+          <div id="unity-build-title">基于多Agent协同的茶产品智能营销系统</div>
+        </div>
+      </div>
+
+      <!-- 命令行控制面板 -->
+      <div class="command-panel">
+        <div class="command-panel-header">
+          <div class="command-panel-tab active" data-tab="control">控制面板</div>
+          <div class="command-panel-tab" data-tab="connection">连接状态</div>
+        </div>
+        <div class="command-panel-content">
+          <div class="panel-section active" id="control-panel">
+            <div class="command-button-group">
+              <button class="command-button" onclick="sendCommand('design_for_youth')">为年轻人设计产品</button>
+              <button class="command-button" onclick="sendCommand('design_for_white_collar')">为白领设计产品</button>
+              <button class="command-button" onclick="sendCommand('design_for_elderly')">为老年人设计产品</button>
+              <button class="command-button" onclick="sendCommand('design_for_student')">为学生设计产品</button>
+              <button class="command-button" onclick="sendCommand('analyze_market')">分析市场需求</button>
+            </div>
+            <div class="command-input-group">
+              <input type="text" class="command-input" id="command-input" placeholder="输入自定义命令...">
+              <button class="send-button" onclick="sendCustomCommand()">发送</button>
+            </div>
+            <div class="log-area" id="log-area">
+              <div class="log-entry info">[系统] 欢迎使用茶产品智能营销系统</div>
+              <div class="log-entry info">[系统] 请选择预设命令或输入自定义命令</div>
+              <div class="log-entry info">[系统] WebGL引擎已初始化，等待指令中...</div>
+            </div>
+          </div>
+          <div class="panel-section" id="connection-panel">
+            <div class="connection-info">
+              <p>系统状态: <span class="status-connected" id="connection-status">已连接</span></p>
+              <p>连接时间: <span id="connection-time">2023-05-15 14:30:22</span></p>
+              <p>数据同步: <span>正常</span></p>
+            </div>
+            <button class="command-button" onclick="reconnectWebSocket()">重新连接服务器</button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- 修改密码模态框 -->
+    <div id="passwordModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>修改密码</h3>
+          <span class="close">&times;</span>
+        </div>
+        <div class="modal-body">
+          <form id="changePasswordForm">
+            <div class="form-group">
+              <label for="currentPassword">当前密码</label>
+              <input type="password" id="currentPassword" required>
+            </div>
+            <div class="form-group">
+              <label for="newPassword">新密码</label>
+              <input type="password" id="newPassword" required>
+            </div>
+            <div class="form-group">
+              <label for="confirmPassword">确认新密码</label>
+              <input type="password" id="confirmPassword" required>
+            </div>
+            <div class="form-group">
+              <p id="passwordError" class="error-message"></p>
+            </div>
+            <div class="form-buttons">
+              <button type="button" class="cancel-btn">取消</button>
+              <button type="submit" class="submit-btn">保存</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // 检查用户是否已登录，未登录则重定向到登录页面
+      if (localStorage.getItem('isLoggedIn') !== 'true' && sessionStorage.getItem('isLoggedIn') !== 'true') {
+        window.location.href = 'login.html';
+      }
+      
+      // 退出登录功能
+      function logout() {
+        // 清除所有登录状态
+        localStorage.removeItem('isLoggedIn');
+        sessionStorage.removeItem('isLoggedIn');
+        // 重定向到登录页面
+        window.location.href = 'login.html';
+      }
+      
+      // 修改密码功能
+      document.addEventListener('DOMContentLoaded', function() {
+        // 获取DOM元素
+        const modal = document.getElementById('passwordModal');
+        const openModalBtn = document.getElementById('changePasswordBtn');
+        const closeBtn = document.querySelector('.close');
+        const cancelBtn = document.querySelector('.cancel-btn');
+        const form = document.getElementById('changePasswordForm');
+        const currentPasswordInput = document.getElementById('currentPassword');
+        const newPasswordInput = document.getElementById('newPassword');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        const errorMessage = document.getElementById('passwordError');
+        
+        // 打开模态框
+        openModalBtn.addEventListener('click', function() {
+          modal.classList.add('show');
+          // 清空表单
+          form.reset();
+          errorMessage.textContent = '';
+        });
+        
+        // 关闭模态框的多种方式
+        function closeModal() {
+          modal.classList.remove('show');
+        }
+        
+        closeBtn.addEventListener('click', closeModal);
+        cancelBtn.addEventListener('click', closeModal);
+        
+        // 点击模态框外部关闭
+        window.addEventListener('click', function(event) {
+          if (event.target === modal) {
+            closeModal();
+          }
+        });
+        
+        // 提交修改密码表单
+        form.addEventListener('submit', function(event) {
+          event.preventDefault();
+          
+          const currentPassword = currentPasswordInput.value;
+          const newPassword = newPasswordInput.value;
+          const confirmPassword = confirmPasswordInput.value;
+          
+          // 验证当前密码
+          if (currentPassword !== 'admin') {
+            errorMessage.textContent = '当前密码不正确！';
+            return;
+          }
+          
+          // 验证新密码长度
+          if (newPassword.length < 6) {
+            errorMessage.textContent = '新密码长度至少为6个字符！';
+            return;
+          }
+          
+          // 验证两次密码输入是否一致
+          if (newPassword !== confirmPassword) {
+            errorMessage.textContent = '两次输入的密码不一致！';
+            return;
+          }
+          
+          // 保存新密码（这里只是模拟，实际应用需要后端API）
+          if (localStorage.getItem('isLoggedIn') === 'true') {
+            localStorage.setItem('userPassword', newPassword);
+          } else {
+            sessionStorage.setItem('userPassword', newPassword);
+          }
+          
+          // 显示成功消息并关闭模态框
+          alert('密码修改成功！下次登录请使用新密码。');
+          closeModal();
+        });
+
+        // 命令面板标签切换
+        const tabs = document.querySelectorAll('.command-panel-tab');
+        tabs.forEach(tab => {
+          tab.addEventListener('click', function() {
+            // 移除所有标签的active类
+            tabs.forEach(t => t.classList.remove('active'));
+            // 添加当前标签的active类
+            this.classList.add('active');
+            
+            // 获取对应的面板
+            const tabName = this.getAttribute('data-tab');
+            const panels = document.querySelectorAll('.panel-section');
+            
+            // 隐藏所有面板
+            panels.forEach(panel => panel.classList.remove('active'));
+            
+            // 显示对应的面板
+            if (tabName === 'control') {
+              document.getElementById('control-panel').classList.add('active');
+            } else if (tabName === 'connection') {
+              document.getElementById('connection-panel').classList.add('active');
+            }
+          });
+        });
+      });
+      
+      // 发送命令到Unity
+      function sendCommand(command) {
+        if (window.unityInstance) {
+          window.unityInstance.SendMessage('CommandHandler', 'ExecuteCommand', command);
+          
+          // 根据不同的命令，生成适合大模型处理的问题
+          let question = "";
+          switch(command) {
+            case 'design_for_youth':
+              question = "请为年轻人设计一款茶产品";
+              break;
+            case 'design_for_white_collar':
+              question = "请为白领设计一款茶产品";
+              break;
+            case 'design_for_elderly':
+              question = "请为老年人设计一款茶产品";
+              break;
+            case 'design_for_student':
+              question = "请为学生设计一款茶产品";
+              break;
+            case 'analyze_market':
+              question = "请分析当前茶产品市场需求";
+              break;
+            default:
+              question = command; // 默认使用命令本身
+          }
+          
+          // 根据不同的命令，显示不同的日志消息
+          let message = "";
+          switch(command) {
+            case 'design_for_youth':
+              message = "正在为年轻人设计茶产品...";
+              break;
+            case 'design_for_white_collar':
+              message = "正在为白领设计茶产品...";
+              break;
+            case 'design_for_elderly':
+              message = "正在为老年人设计茶产品...";
+              break;
+            case 'design_for_student':
+              message = "正在为学生设计茶产品...";
+              break;
+            case 'analyze_market':
+              message = "正在分析市场需求...";
+              break;
+            default:
+              message = `执行命令: ${command}`;
+          }
+          
+          logMessage(message);
+          
+          // 使用生成的问题通过WebSocket发送
+          sendCommandViaWebSocket(question);
+        } else {
+          logMessage('Unity实例尚未准备好，无法发送命令', 'error');
+          // 即使Unity实例未准备好，也发送WebSocket命令
+          sendCommandViaWebSocket(command);
+        }
+      }
+      
+      // WebSocket连接断开处理和重连机制
+      let reconnectAttempts = 0;
+      const MAX_RECONNECT_ATTEMPTS = 3;
+      let serverShutdownDetected = false;
+
+      // 检查后端服务状态并提示用户
+      function checkServerStatus() {
+        if (serverShutdownDetected) {
+          const statusDiv = document.createElement('div');
+          statusDiv.className = 'server-status-alert';
+          statusDiv.innerHTML = `
+            <div class="alert-content">
+              <h3>后端服务已关闭</h3>
+              <p>检测到后端服务已关闭。请按照以下步骤重启服务：</p>
+              <ol>
+                <li>返回命令行窗口</li>
+                <li>按任意键关闭当前会话</li>
+                <li>重新运行 start_webgl.bat 脚本</li>
+                <li>等待服务启动完成后刷新此页面</li>
+              </ol>
+              <button id="dismiss-alert">我知道了</button>
+            </div>
+          `;
+          
+          // 添加样式
+          const style = document.createElement('style');
+          style.textContent = `
+            .server-status-alert {
+              position: fixed;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              background-color: rgba(0, 0, 0, 0.7);
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              z-index: 9999;
+            }
+            .alert-content {
+              background-color: #f8f9fa;
+              color: #212529;
+              padding: 20px;
+              border-radius: 8px;
+              max-width: 500px;
+              box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            }
+            .alert-content h3 {
+              margin-top: 0;
+              color: #dc3545;
+            }
+            .alert-content ol {
+              text-align: left;
+              padding-left: 20px;
+            }
+            .alert-content button {
+              background-color: #4361ee;
+              color: white;
+              border: none;
+              padding: 8px 16px;
+              border-radius: 4px;
+              cursor: pointer;
+              margin-top: 10px;
+            }
+            .alert-content button:hover {
+              background-color: #3a56d4;
+            }
+          `;
+          document.head.appendChild(style);
+          document.body.appendChild(statusDiv);
+          
+          // 添加关闭按钮功能
+          document.getElementById('dismiss-alert').addEventListener('click', function() {
+            document.body.removeChild(statusDiv);
+          });
+        }
+      }
+
+      // 初始化WebSocket连接
+      function initWebSocket(unityInstance) {
+        if (window.socket) {
+          window.socket.close();
+        }
+        
+        reconnectAttempts++;
+        
+        try {
+          // 连接到WebSocket服务器
+          window.socket = new WebSocket('ws://127.0.0.1:12339');
+          
+          // 连接成功
+          window.socket.onopen = function() {
+            logMessage('WebSocket连接成功');
+            document.getElementById('connection-status').textContent = '已连接';
+            document.getElementById('connection-status').className = 'status-connected';
+            
+            // 重置重连计数
+            reconnectAttempts = 0;
+            serverShutdownDetected = false;
+            
+            // 更新连接时间
+            const now = new Date();
+            document.getElementById('connection-time').textContent = 
+              `${now.getFullYear()}-${(now.getMonth()+1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
+            
+            // 发送初始化消息
+            const initMessage = {
+              type: 'init',
+              source: 'webClient',
+              timestamp: new Date().toISOString()
+            };
+            window.socket.send(JSON.stringify(initMessage));
+          };
+          
+          // 接收消息
+          window.socket.onmessage = function(event) {
+            try {
+              const data = JSON.parse(event.data);
+              logMessage(`收到服务器消息: ${data.message || JSON.stringify(data)}`);
+              
+              // 如果Unity实例存在，将消息传递给Unity
+              if (window.unityInstance && data.command) {
+                window.unityInstance.SendMessage('CommandHandler', 'ExecuteCommand', data.command);
+              }
+            } catch (e) {
+              logMessage(`收到服务器消息: ${event.data}`);
+            }
+          };
+          
+          // 连接关闭
+          window.socket.onclose = function() {
+            logMessage('WebSocket连接已关闭', 'warning');
+            document.getElementById('connection-status').textContent = '已断开';
+            document.getElementById('connection-status').className = '';
+            
+            // 如果重连次数小于最大次数，尝试重连
+            if (reconnectAttempts < MAX_RECONNECT_ATTEMPTS) {
+              logMessage(`尝试重新连接 (${reconnectAttempts}/${MAX_RECONNECT_ATTEMPTS})...`, 'warning');
+              setTimeout(() => {
+                initWebSocket(window.unityInstance);
+              }, 2000);
+            } else {
+              // 超过最大重连次数，判断为服务器已关闭
+              serverShutdownDetected = true;
+              logMessage('服务器可能已关闭，请重启后端服务', 'error');
+              checkServerStatus();
+            }
+          };
+          
+          // 连接错误
+          window.socket.onerror = function(error) {
+            logMessage('WebSocket连接错误', 'error');
+            document.getElementById('connection-status').textContent = '连接错误';
+            document.getElementById('connection-status').className = '';
+            console.error('WebSocket错误:', error);
+            
+            // 如果是第一次尝试连接失败，可能是服务器未启动
+            if (reconnectAttempts === 1) {
+              serverShutdownDetected = true;
+              checkServerStatus();
+            }
+          };
+          
+          if (unityInstance) {
+            window.unityInstance = unityInstance;
+          }
+          
+          return true;
+        } catch (e) {
+          logMessage('WebSocket初始化失败: ' + e.message, 'error');
+          document.getElementById('connection-status').textContent = '连接失败';
+          document.getElementById('connection-status').className = '';
+          console.error('WebSocket初始化错误:', e);
+          
+          // 如果初始化失败，可能是服务器未启动
+          serverShutdownDetected = true;
+          checkServerStatus();
+          
+          return false;
+        }
+      }
+      
+      // 通过WebSocket发送命令到服务器
+      function sendCommandViaWebSocket(command) {
+        if (serverShutdownDetected) {
+          logMessage('服务器已关闭，请重启后端服务', 'error');
+          checkServerStatus();
+          return;
+        }
+        
+        if (window.socket && window.socket.readyState === WebSocket.OPEN) {
+          // 修改为后端期望的消息格式，使用 type: "question" 字段
+          const commandData = {
+            type: "question",
+            question: command, // 将命令放在question字段中
+            timestamp: new Date().toISOString()
+          };
+          window.socket.send(JSON.stringify(commandData));
+          logMessage('WebSocket命令已发送: ' + command);
+        } else {
+          // 如果WebSocket未连接，尝试连接
+          initWebSocket();
+          // 记录错误
+          logMessage('WebSocket未连接，尝试重新连接...', 'warning');
+          // 延迟500ms后重试发送
+          setTimeout(() => {
+            if (window.socket && window.socket.readyState === WebSocket.OPEN) {
+              const commandData = {
+                type: "question",
+                question: command, // 将命令放在question字段中
+                timestamp: new Date().toISOString()
+              };
+              window.socket.send(JSON.stringify(commandData));
+              logMessage('WebSocket命令已发送: ' + command);
+            } else {
+              logMessage('WebSocket连接失败，无法发送命令', 'error');
+              
+              // 如果重连失败，可能是服务器已关闭
+              if (reconnectAttempts >= MAX_RECONNECT_ATTEMPTS) {
+                serverShutdownDetected = true;
+                checkServerStatus();
+              }
+            }
+          }, 500);
+        }
+      }
+      
+      // 重新连接WebSocket
+      function reconnectWebSocket() {
+        document.getElementById('connection-status').textContent = '正在连接...';
+        if (initWebSocket(window.unityInstance)) {
+          logMessage('正在重新连接WebSocket...');
+        } else {
+          logMessage('WebSocket重新连接失败', 'error');
+        }
+      }
+      
+      // 发送自定义命令
+      function sendCustomCommand() {
+        const commandInput = document.getElementById('command-input');
+        const command = commandInput.value.trim();
+        
+        if (command) {
+          sendCommand(command);
+          commandInput.value = '';
+        }
+      }
+      
+      // 添加日志
+      function logMessage(message, type = 'info') {
+        const logArea = document.getElementById('log-area');
+        const now = new Date();
+        const timeString = `[${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}]`;
+        
+        const logEntry = document.createElement('div');
+        logEntry.className = `log-entry ${type}`;
+        logEntry.textContent = `${timeString} ${message}`;
+        
+        logArea.appendChild(logEntry);
+        logArea.scrollTop = logArea.scrollHeight;
+      }
+      
+      // 移动端菜单切换
+      document.querySelector('.header-menu-toggle').addEventListener('click', function() {
+        document.querySelector('.sidebar').classList.toggle('active');
+        document.querySelector('.main-content').classList.toggle('sidebar-active');
+      });
+      
+      var container = document.querySelector("#unity-container");
+      var canvas = document.querySelector("#unity-canvas");
+      var loadingBar = document.querySelector("#unity-loading-bar");
+      var progressBarFull = document.querySelector("#unity-progress-bar-full");
+      var fullscreenButton = document.querySelector("#unity-fullscreen-button");
+      var warningBanner = document.querySelector("#unity-warning");
+
+      // Shows a temporary message banner/ribbon for a few seconds, or
+      // a permanent error message on top of the canvas if type=='error'.
+      // If type=='warning', a yellow highlight color is used.
+      // Modify or remove this function to customize the visually presented
+      // way that non-critical warnings and error messages are presented to the
+      // user.
+      function unityShowBanner(msg, type) {
+        function updateBannerVisibility() {
+          warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
+        }
+        var div = document.createElement('div');
+        div.innerHTML = msg;
+        warningBanner.appendChild(div);
+        if (type == 'error') div.style = 'background: red; padding: 10px;';
+        else {
+          if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
+          setTimeout(function() {
+            warningBanner.removeChild(div);
+            updateBannerVisibility();
+          }, 5000);
+        }
+        updateBannerVisibility();
+      }
+
+      var buildUrl = "Build";
+      var loaderUrl = buildUrl + "/web.loader.js";
+      var config = {
+        dataUrl: buildUrl + "/web.data",
+        frameworkUrl: buildUrl + "/web.framework.js",
+        codeUrl: buildUrl + "/web.wasm",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "DefaultCompany",
+        productName: "基于多Agent协同的茶产品智能营销系统",
+        productVersion: "1.0",
+        showBanner: unityShowBanner,
+      };
+
+      // By default Unity keeps WebGL canvas render target size matched with
+      // the DOM size of the canvas element (scaled by window.devicePixelRatio)
+      // Set this to false if you want to decouple this synchronization from
+      // happening inside the engine, and you would instead like to size up
+      // the canvas DOM size and WebGL render target sizes yourself.
+      // config.matchWebGLToCanvasSize = false;
+
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        // Mobile device style: fill the whole browser client area with the game canvas:
+
+        var meta = document.createElement('meta');
+        meta.name = 'viewport';
+        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+        document.getElementsByTagName('head')[0].appendChild(meta);
+        container.className = "unity-mobile";
+        canvas.className = "unity-mobile";
+
+        // To lower canvas resolution on mobile devices to gain some
+        // performance, uncomment the following line:
+        // config.devicePixelRatio = 1;
+
+        unityShowBanner('WebGL builds are not supported on mobile devices.');
+      } else {
+        // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
+        canvas.style.width = "100%";
+        canvas.style.height = "100%";
+      }
+
+      loadingBar.style.display = "block";
+
+      var script = document.createElement("script");
+      script.src = loaderUrl;
+      script.onload = () => {
+        // 增加内存限制，防止WebGL堆栈溢出
+        if (typeof UnityLoader !== 'undefined' && UnityLoader.SystemInfo) {
+          UnityLoader.SystemInfo.hasWebGL = (function(old) {
+            return function() {
+              // 增加WebGL调用堆栈大小
+              Error.stackTraceLimit = 100;
+              return old.apply(this, arguments);
+            }
+          })(UnityLoader.SystemInfo.hasWebGL);
+        }
+        
+        createUnityInstance(canvas, config, (progress) => {
+          progressBarFull.style.width = 100 * progress + "%";
+        }).then((unityInstance) => {
+          window.unityInstance = unityInstance; // 存储Unity实例以便命令行使用
+          loadingBar.style.display = "none";
+          fullscreenButton.onclick = () => {
+            unityInstance.SetFullscreen(1);
+          };
+          // 尝试初始化WebSocket连接
+          initWebSocket(unityInstance);
+          logMessage('Unity实例加载完成，系统准备就绪');
+          
+          // 主动尝试发送一条测试消息
+          setTimeout(() => {
+            sendCommandViaWebSocket('system_init');
+            logMessage('已发送系统初始化命令');
+          }, 1000);
+        }).catch((message) => {
+          alert(message);
+          logMessage('Unity实例加载失败: ' + message, 'error');
+          // 即使Unity加载失败，也尝试初始化WebSocket
+          initWebSocket();
+        });
+      };
+      document.body.appendChild(script);
+
+      // 按回车发送命令
+      document.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+          const commandInput = document.getElementById('command-input');
+          if (document.activeElement === commandInput) {
+            sendCustomCommand();
+            event.preventDefault();
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

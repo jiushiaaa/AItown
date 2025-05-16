@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基于多Agent协同的茶产品智能营销系统 - 登录</title>
+    <link rel="stylesheet" href="TemplateData/style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+        }
+        
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            z-index: 0;
+        }
+        
+        body {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+            background: url('Assets/background.jpg') no-repeat center center;
+            background-size: cover;
+        }
+        
+        .header {
+            padding: 20px 50px;
+            color: #fff;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .system-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px rgba(0, 150, 255, 0.8);
+        }
+        
+        .system-subtitle {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .container {
+            display: flex;
+            flex: 1;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 0 10%;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .login-box {
+            background-color: rgba(255, 255, 255, 0.92);
+            border-radius: 10px;
+            padding: 35px;
+            width: 380px;
+            box-shadow: 0 0 30px rgba(0, 150, 255, 0.4);
+            animation: fadeIn 1s ease-out;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .login-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .login-title h2 {
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .login-title p {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 13px;
+            color: #1890ff;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 15px 12px 40px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 14px;
+            outline: none;
+            transition: border 0.3s;
+        }
+        
+        .form-input:focus {
+            border-color: #1890ff;
+            box-shadow: 0 0 5px rgba(24, 144, 255, 0.3);
+        }
+        
+        .btn-login {
+            width: 100%;
+            background-color: #1890ff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .btn-login:hover {
+            background-color: #0c7cd5;
+        }
+        
+        .error-message {
+            color: #f5222d;
+            font-size: 13px;
+            margin-top: 15px;
+            text-align: center;
+            display: none;
+        }
+        
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 15px rgba(0, 150, 255, 0.4);
+            opacity: 0.5;
+            animation: pulse 4s infinite;
+            z-index: -1;
+        }
+        
+        .circle.c1 {
+            width: 300px;
+            height: 300px;
+            top: 30%;
+            left: 20%;
+            animation-delay: 0s;
+        }
+        
+        .circle.c2 {
+            width: 450px;
+            height: 450px;
+            top: 20%;
+            left: 15%;
+            animation-delay: 1s;
+        }
+        
+        .circle.c3 {
+            width: 600px;
+            height: 600px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 2s;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.08); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 0.5; }
+        }
+        
+        .remember-me {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .remember-me input[type="checkbox"] {
+            margin-right: 6px;
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+        
+        .remember-me label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- 移除旧的CSS背景元素，保留圆形动画 -->
+    <div class="circle c1"></div>
+    <div class="circle c2"></div>
+    <div class="circle c3"></div>
+    
+    <div class="header">
+        <div class="system-title">基于多Agent协同的茶产品智能营销系统</div>
+        <div class="system-subtitle">Multi-Agent Tea Product Marketing System</div>
+    </div>
+    
+    <div class="container">
+        <div class="login-box">
+            <div class="login-title">
+                <h2>企业后台管理</h2>
+                <p>ALL CORPORATE INFORMATION</p>
+            </div>
+            
+            <form id="loginForm">
+                <div class="input-group">
+                    <i>👤</i>
+                    <input type="text" id="username" name="username" class="form-input" placeholder="请输入用户名" required>
+                </div>
+                
+                <div class="input-group">
+                    <i>🔒</i>
+                    <input type="password" id="password" name="password" class="form-input" placeholder="请输入密码" required>
+                </div>
+                
+                <div class="remember-me">
+                    <label>
+                        <input type="checkbox" id="rememberMe"> 记住我
+                    </label>
+                </div>
+                
+                <button type="submit" class="btn-login">登录</button>
+                
+                <div id="errorMsg" class="error-message">用户名或密码错误，请重试</div>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+            
+            // 检查自定义密码
+            const savedPassword = localStorage.getItem('userPassword') || 'admin';
+            
+            if (username === 'admin' && (password === savedPassword || password === 'admin')) {
+                // 登录成功
+                if (rememberMe) {
+                    // 只有勾选"记住我"才保存登录状态到localStorage
+                    localStorage.setItem('isLoggedIn', 'true');
+                } else {
+                    // 未勾选"记住我"，使用sessionStorage (仅在当前会话有效)
+                    sessionStorage.setItem('isLoggedIn', 'true');
+                    // 确保清除localStorage中可能存在的登录状态
+                    localStorage.removeItem('isLoggedIn');
+                }
+                
+                // 跳转到系统主页
+                window.location.href = 'index.html';
+            } else {
+                // 显示错误信息
+                document.getElementById('errorMsg').style.display = 'block';
+            }
+        });
+        
+        // 检查是否已登录
+        window.onload = function() {
+            // 先检查sessionStorage（当前会话）
+            if (sessionStorage.getItem('isLoggedIn') === 'true') {
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            // 再检查localStorage（长期存储）
+            if (localStorage.getItem('isLoggedIn') === 'true') {
+                window.location.href = 'index.html';
+            }
+        };
+    </script>
+</body>
+</html> 

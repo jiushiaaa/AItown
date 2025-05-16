@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>消费者分析 - 茶产品智能营销系统</title>
+    <link rel="shortcut icon" href="../TemplateData/favicon.ico">
+    <link rel="stylesheet" href="../TemplateData/style.css">
+    <link rel="stylesheet" href="../TemplateData/admin-style.css">
+    <link rel="stylesheet" href="./css/analytics.css">
+    <!-- 优先加载侧边栏脚本 -->
+    <script src="./js/sidebar.js"></script>
+    <!-- 加载数据服务 -->
+    <script src="./js/data-service.js"></script>
+    <!-- 引入 ECharts -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+  </head>
+  <body>
+    <!-- 顶部导航栏 -->
+    <header class="header">
+      <div class="header-menu-toggle">☰</div>
+      <div class="system-logo">
+        茶产品智能营销系统
+      </div>
+      <div class="welcome-text">欢迎 超级管理员</div>
+      <div class="header-buttons">
+        <button class="header-btn" id="changePasswordBtn">
+          <i class="icon-placeholder icon-user"></i> 修改密码
+        </button>
+        <button class="header-btn logout-btn" onclick="logout()">
+          <i class="icon-placeholder icon-logout"></i> 退出系统
+        </button>
+      </div>
+    </header>
+
+    <!-- 左侧边栏 -->
+    <nav class="sidebar">
+      <ul class="sidebar-menu">
+        <li class="sidebar-item">
+          <a href="../index.html" class="sidebar-link">
+            <i class="icon-placeholder icon-simulation"></i>
+            仿真模拟系统
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="../model-config.html" class="sidebar-link">
+            <i class="icon-placeholder icon-settings"></i>
+            模型配置
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="./dashboard.html" class="sidebar-link">
+            <i class="icon-placeholder icon-dashboard"></i>
+            数据概览
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="./consumer.html" class="sidebar-link active">
+            <i class="icon-placeholder icon-user"></i>
+            消费者分析
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="./region.html" class="sidebar-link">
+            <i class="icon-placeholder icon-location"></i>
+            地域分析
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="./psychology.html" class="sidebar-link">
+            <i class="icon-placeholder icon-opportunity"></i>
+            消费心理分析
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="./marketing.html" class="sidebar-link">
+            <i class="icon-placeholder icon-idea"></i>
+            营销策略
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- 主内容区域 -->
+    <main class="main-content">
+      <div class="dashboard-container">
+        <!-- 时间筛选器 -->
+        <div class="time-filter">
+          <div class="filter-title">时间范围：</div>
+          <div class="filter-options">
+            <div class="filter-option" data-value="today">今日</div>
+            <div class="filter-option" data-value="yesterday">昨日</div>
+            <div class="filter-option active" data-value="7days">近7天</div>
+            <div class="filter-option" data-value="30days">近30天</div>
+            <div class="filter-option" data-value="90days">近90天</div>
+          </div>
+          <div class="filter-actions">
+            <button class="refresh-btn test-btn" id="testDataBtn">
+              <i class="icon-placeholder icon-settings"></i> 测试数据
+            </button>
+          </div>
+        </div>
+
+        <!-- 消费者概览指标 -->
+        <div class="metrics-container">
+          <div class="metric-card">
+            <div class="metric-title">新增消费者</div>
+            <div class="metric-value">
+              <span id="newConsumers">--</span>
+              <div class="metric-trend positive">
+                <span class="trend-arrow">↑</span>
+                <span id="newConsumersTrend">--</span>%
+              </div>
+            </div>
+          </div>
+          
+          <div class="metric-card">
+            <div class="metric-title">活跃消费者</div>
+            <div class="metric-value">
+              <span id="activeConsumers">--</span>
+              <div class="metric-trend positive">
+                <span class="trend-arrow">↑</span>
+                <span id="activeConsumersTrend">--</span>%
+              </div>
+            </div>
+          </div>
+          
+          <div class="metric-card">
+            <div class="metric-title">平均客单价</div>
+            <div class="metric-value">
+              <span id="avgOrderValue">--</span>元
+              <div class="metric-trend positive">
+                <span class="trend-arrow">↑</span>
+                <span id="avgOrderValueTrend">--</span>%
+              </div>
+            </div>
+          </div>
+          
+          <div class="metric-card">
+            <div class="metric-title">复购率</div>
+            <div class="metric-value">
+              <span id="repurchaseRate">--</span>%
+              <div class="metric-trend negative">
+                <span class="trend-arrow">↓</span>
+                <span id="repurchaseRateTrend">--</span>%
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 图表区域 -->
+        <div class="charts-container">
+          <!-- 消费者画像 -->
+          <div class="chart-card wide-chart">
+            <div class="chart-header">
+              <div class="chart-title">消费者画像</div>
+              <div class="button-group">
+                <button class="refresh-btn" id="refreshPortraitBtn">
+                  <i class="icon-placeholder icon-simulation"></i> 刷新
+                </button>
+              </div>
+            </div>
+            <div class="chart-content" id="consumerPortraitChart"></div>
+          </div>
+          
+          <!-- 消费者年龄分布 -->
+          <div class="chart-card half-chart">
+            <div class="chart-header">
+              <div class="chart-title">年龄分布</div>
+              <div class="button-group">
+                <button class="refresh-btn" id="refreshAgeBtn">
+                  <i class="icon-placeholder icon-simulation"></i> 刷新
+                </button>
+              </div>
+            </div>
+            <div class="chart-content" id="ageDistributionChart"></div>
+          </div>
+          
+          <!-- 消费者职业分布 -->
+          <div class="chart-card half-chart">
+            <div class="chart-header">
+              <div class="chart-title">职业分布</div>
+              <div class="button-group">
+                <button class="refresh-btn" id="refreshOccupationBtn">
+                  <i class="icon-placeholder icon-simulation"></i> 刷新
+                </button>
+              </div>
+            </div>
+            <div class="chart-content" id="occupationChart"></div>
+          </div>
+          
+          <!-- 消费频率分析 -->
+          <div class="chart-card map-chart">
+            <div class="chart-header">
+              <div class="chart-title">消费频率分析</div>
+              <div class="button-group">
+                <button class="refresh-btn" id="refreshFrequencyBtn">
+                  <i class="icon-placeholder icon-simulation"></i> 刷新
+                </button>
+              </div>
+            </div>
+            <div class="chart-content" id="purchaseFrequencyChart"></div>
+          </div>
+          
+          <!-- 消费者忠诚度分析 -->
+          <div class="chart-card map-chart">
+            <div class="chart-header">
+              <div class="chart-title">消费者忠诚度分析</div>
+              <div class="button-group">
+                <button class="refresh-btn" id="refreshLoyaltyBtn">
+                  <i class="icon-placeholder icon-simulation"></i> 刷新
+                </button>
+              </div>
+            </div>
+            <div class="chart-content" id="loyaltyChart"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- 修改密码模态框 -->
+    <div id="passwordModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>修改密码</h3>
+          <span class="close">&times;</span>
+        </div>
+        <div class="modal-body">
+          <form id="changePasswordForm">
+            <div class="form-group">
+              <label for="currentPassword">当前密码</label>
+              <input type="password" id="currentPassword" required>
+            </div>
+            <div class="form-group">
+              <label for="newPassword">新密码</label>
+              <input type="password" id="newPassword" required>
+            </div>
+            <div class="form-group">
+              <label for="confirmPassword">确认新密码</label>
+              <input type="password" id="confirmPassword" required>
+            </div>
+            <div class="form-group">
+              <p id="passwordError" class="error-message"></p>
+            </div>
+            <div class="form-buttons">
+              <button type="button" class="cancel-btn">取消</button>
+              <button type="submit" class="submit-btn">保存</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="./js/common.js"></script>
+    <script src="./js/consumer.js"></script>
+  </body>
+</html> 
