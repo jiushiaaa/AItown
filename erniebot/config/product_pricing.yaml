@@ -1,0 +1,202 @@
+# 产品价格范围配置
+# 价格格式："产品名称: [最低价格, 最高价格, 分类]"
+
+# 核心红茶系列
+金骏眉特级:
+  price_range: [200, 500]
+  category: 核心红茶
+  description: 50g罐装礼盒
+金骏眉典藏:
+  price_range: [500, 1000]
+  category: 核心红茶
+  description: 高端典藏版
+金骏眉珍藏:
+  price_range: [1000, 2000]
+  category: 核心红茶
+  description: 高端礼盒如"宋风雅韵"
+银骏眉:
+  price_range: [200, 350]
+  category: 核心红茶
+  description: 精选银芽茶叶
+正山小种野茶:
+  price_range: [100, 300]
+  category: 核心红茶
+  description: 传统烟熏工艺
+正山小种特级:
+  price_range: [200, 400]
+  category: 核心红茶
+  description: 特级品质
+源起1568特级:
+  price_range: [800, 1200]
+  category: 核心红茶
+  description: 特级礼盒
+妃子笑:
+  price_range: [150, 400]
+  category: 核心红茶
+  description: 荔枝香特色
+百年原生老枞:
+  price_range: [400, 800]
+  category: 核心红茶
+  description: 古树茶特性
+骏眉红茶:
+  price_range: [80, 150]
+  category: 核心红茶
+  description: 日常饮用装
+正山韵·传世金红:
+  price_range: [1000, 2000]
+  category: 核心红茶
+  description: 传世臻品
+
+# 入门级系列（价格亲民）
+茶缘·晨曦:
+  price_range: [80, 150]
+  category: 入门级
+  description: 清新口感
+茶缘·春韵:
+  price_range: [120, 200]
+  category: 入门级
+  description: 春茶特制
+初味红茶:
+  price_range: [80, 150]
+  category: 入门级
+  description: 入门品鉴款
+轻尝·红茶:
+  price_range: [100, 200]
+  category: 入门级
+  description: 轻口感系列
+茶语·小红:
+  price_range: [100, 180]
+  category: 入门级
+  description: 日常饮用装
+
+# 地域特色红茶 (骏眉中国系列)
+普安红:
+  price_range: [100, 300]
+  category: 地域特色
+  description: 贵州普安特色
+巴东红:
+  price_range: [100, 300]
+  category: 地域特色
+  description: 湖北巴东特色
+信阳红:
+  price_range: [100, 300]
+  category: 地域特色
+  description: 河南信阳特色
+会稽红:
+  price_range: [120, 280]
+  category: 地域特色
+  description: 浙江绍兴特色
+广元红:
+  price_range: [150, 300]
+  category: 地域特色
+  description: 四川广元特色
+察隅红:
+  price_range: [100, 300]
+  category: 地域特色
+  description: 西藏察隅特色
+白沙红:
+  price_range: [120, 260]
+  category: 地域特色
+  description: 海南白沙特色
+古丈红:
+  price_range: [130, 270]
+  category: 地域特色
+  description: 湖南古丈特色
+黔楚野枞礼盒:
+  price_range: [500, 1000]
+  category: 地域特色
+  description: 特色茶礼盒
+
+# 礼盒系列
+宋风雅韵礼盒:
+  price_range: [1000, 2000]
+  category: 礼盒
+  description: 高端礼盒
+秘境寻踪礼盒:
+  price_range: [600, 1200]
+  category: 礼盒
+  description: 珍稀茶礼盒
+经典马口罐礼盒:
+  price_range: [500, 1000]
+  category: 礼盒
+  description: 经典收藏装
+全家福组合礼盒:
+  price_range: [800, 1500]
+  category: 礼盒
+  description: 组合礼盒
+茗品尊享礼盒:
+  price_range: [1000, 2000]
+  category: 礼盒
+  description: 高端尊享系列
+红茶品鉴小样礼盒:
+  price_range: [200, 500]
+  category: 礼盒
+  description: 多种茶叶品鉴装
+
+# 高端收藏级系列
+百年老枞·臻藏:
+  price_range: [1000, 2000]
+  category: 高端收藏级
+  description: 珍稀收藏版
+金骏眉·大师款:
+  price_range: [1500, 3000]
+  category: 高端收藏级
+  description: 大师亲制限量版
+武夷秘传·1986:
+  price_range: [2000, 4000]
+  category: 高端收藏级
+  description: 传承秘方1986年
+正山小种·古法:
+  price_range: [1200, 2500]
+  category: 高端收藏级
+  description: 古法工艺制作
+金芽·珍藏版:
+  price_range: [2000, 5000]
+  category: 高端收藏级
+  description: 特选金芽制作
+奇韵藏珍限定:
+  price_range: [3000, 5000]
+  category: 高端收藏级
+  description: 蛇年限定等特殊款
+
+# 其他茶类
+大红袍:
+  price_range: [200, 600]
+  category: 其他茶类
+  description: 乌龙茶
+白毫银针:
+  price_range: [200, 600]
+  category: 其他茶类
+  description: 白茶
+铁观音:
+  price_range: [150, 400]
+  category: 其他茶类
+  description: 乌龙茶
+
+# 促销产品和特价套装
+新客体验装:
+  price_range: [99, 199]
+  category: 促销产品
+  description: 新客户专享
+会员特惠礼盒:
+  price_range: [350, 650]
+  category: 促销产品
+  description: 会员专享礼盒
+节日限定礼盒:
+  price_range: [300, 800]
+  category: 促销产品
+  description: 节日特别版
+
+# 个人定制产品
+定制款金骏眉:
+  price_range: [300, 800]
+  category: 个人定制
+  description: 个人定制版本
+定制礼盒:
+  price_range: [500, 1500]
+  category: 个人定制
+  description: 个人定制礼盒
+企业定制茶礼:
+  price_range: [1000, 3000]
+  category: 个人定制
+  description: 企业专属定制 

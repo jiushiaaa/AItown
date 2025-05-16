@@ -1,0 +1,155 @@
+# 产品成本和库存数据配置
+
+# 核心红茶系列
+金骏眉特级:
+  cost: 80
+  initial_stock: 200
+金骏眉典藏:
+  cost: 200
+  initial_stock: 150
+金骏眉珍藏:
+  cost: 400
+  initial_stock: 100
+银骏眉:
+  cost: 80
+  initial_stock: 250
+正山小种野茶:
+  cost: 40
+  initial_stock: 300
+正山小种特级:
+  cost: 80
+  initial_stock: 200
+源起1568特级:
+  cost: 320
+  initial_stock: 100
+妃子笑:
+  cost: 60
+  initial_stock: 200
+百年原生老枞:
+  cost: 160
+  initial_stock: 120
+骏眉红茶:
+  cost: 32
+  initial_stock: 400
+正山韵·传世金红:
+  cost: 400
+  initial_stock: 120
+
+# 入门级系列（价格亲民）
+茶缘·晨曦:
+  cost: 32
+  initial_stock: 500
+茶缘·春韵:
+  cost: 48
+  initial_stock: 500
+初味红茶:
+  cost: 32
+  initial_stock: 600
+轻尝·红茶:
+  cost: 40
+  initial_stock: 600
+茶语·小红:
+  cost: 40
+  initial_stock: 450
+
+# 地域特色红茶
+普安红:
+  cost: 40
+  initial_stock: 200
+巴东红:
+  cost: 40
+  initial_stock: 200
+信阳红:
+  cost: 40
+  initial_stock: 200
+会稽红:
+  cost: 48
+  initial_stock: 200
+广元红:
+  cost: 60
+  initial_stock: 200
+察隅红:
+  cost: 40
+  initial_stock: 200
+白沙红:
+  cost: 48
+  initial_stock: 200
+古丈红:
+  cost: 52
+  initial_stock: 200
+黔楚野枞礼盒:
+  cost: 200
+  initial_stock: 150
+
+# 礼盒系列
+宋风雅韵礼盒:
+  cost: 400
+  initial_stock: 120
+秘境寻踪礼盒:
+  cost: 240
+  initial_stock: 150
+经典马口罐礼盒:
+  cost: 200
+  initial_stock: 180
+全家福组合礼盒:
+  cost: 320
+  initial_stock: 100
+茗品尊享礼盒:
+  cost: 400
+  initial_stock: 80
+红茶品鉴小样礼盒:
+  cost: 80
+  initial_stock: 200
+
+# 高端收藏级系列
+百年老枞·臻藏:
+  cost: 400
+  initial_stock: 50
+金骏眉·大师款:
+  cost: 600
+  initial_stock: 30
+武夷秘传·1986:
+  cost: 800
+  initial_stock: 25
+正山小种·古法:
+  cost: 480
+  initial_stock: 40
+金芽·珍藏版:
+  cost: 800
+  initial_stock: 20
+奇韵藏珍限定:
+  cost: 1200
+  initial_stock: 15
+
+# 其他茶类
+大红袍:
+  cost: 80
+  initial_stock: 150
+白毫银针:
+  cost: 80
+  initial_stock: 150
+铁观音:
+  cost: 60
+  initial_stock: 200
+
+# 促销产品和特价套装
+新客体验装:
+  cost: 40
+  initial_stock: 300
+会员特惠礼盒:
+  cost: 140
+  initial_stock: 200
+节日限定礼盒:
+  cost: 120
+  initial_stock: 200
+
+# 个人定制产品
+定制款金骏眉:
+  cost: 120
+  initial_stock: 100
+定制礼盒:
+  cost: 200
+  initial_stock: 80
+企业定制茶礼:
+  cost: 400
+  initial_stock: 50 
