@@ -1,0 +1,259 @@
+/* 数据分析页面样式 */
+
+/* 时间筛选器 */
+.time-filter {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  padding: 10px 15px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.filter-title {
+  font-weight: 500;
+  margin-right: 15px;
+  white-space: nowrap;
+}
+
+.filter-options {
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+.filter-option {
+  padding: 6px 12px;
+  margin-right: 10px;
+  margin-bottom: 5px;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-option:hover {
+  background-color: #f0f9ff;
+  border-color: #69c0ff;
+}
+
+.filter-option.active {
+  background-color: #1890ff;
+  color: #fff;
+  border-color: #1890ff;
+}
+
+.filter-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+/* 指标卡片 */
+.metrics-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.metric-card {
+  background-color: #fff;
+  border-radius: 6px;
+  padding: 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.metric-title {
+  font-size: 14px;
+  color: #8c8c8c;
+  margin-bottom: 10px;
+}
+
+.metric-value {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.metric-value > span {
+  font-size: 22px;
+  font-weight: 600;
+  color: #262626;
+}
+
+.metric-trend {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.metric-trend.positive {
+  color: #52c41a;
+}
+
+.metric-trend.negative {
+  color: #f5222d;
+}
+
+.trend-arrow {
+  margin-right: 3px;
+}
+
+/* 图表区域 */
+.charts-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.chart-card {
+  background-color: #fff;
+  border-radius: 6px;
+  padding: 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  position: relative;
+  min-height: 300px;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.chart-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #262626;
+}
+
+.button-group {
+  display: flex;
+}
+
+.refresh-btn {
+  background-color: transparent;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  padding: 4px 8px;
+  margin-left: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+}
+
+.refresh-btn:hover {
+  background-color: #f0f9ff;
+  border-color: #69c0ff;
+  color: #1890ff;
+}
+
+.refresh-btn i {
+  margin-right: 3px;
+}
+
+.test-btn {
+  background-color: #f9f0ff;
+  border-color: #d3adf7;
+  color: #722ed1;
+}
+
+.test-btn:hover {
+  background-color: #efdbff;
+  border-color: #b37feb;
+  color: #722ed1;
+}
+
+.chart-content {
+  height: calc(100% - 30px);
+  min-height: 270px;
+  position: relative;
+}
+
+.chart-content.loading::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.6);
+  z-index: 10;
+}
+
+.chart-content.loading::after {
+  content: "加载中...";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #1890ff;
+  font-size: 14px;
+  z-index: 11;
+}
+
+/* 图表大小 */
+.wide-chart {
+  grid-column: span 2;
+  height: 400px;
+}
+
+.half-chart {
+  grid-column: span 1;
+  height: 350px;
+}
+
+.map-chart {
+  grid-column: span 1;
+  height: 380px;
+}
+
+/* 响应式调整 */
+@media (max-width: 1200px) {
+  .metrics-container {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+}
+
+@media (max-width: 992px) {
+  .charts-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .wide-chart, .half-chart, .map-chart {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .metrics-container {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+  
+  .time-filter {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .filter-title {
+    margin-bottom: 10px;
+  }
+  
+  .filter-actions {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  .metrics-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+} 
