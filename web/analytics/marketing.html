@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>营销策略 - 茶产品智能营销系统</title>
+    <link rel="shortcut icon" href="../TemplateData/favicon.ico">
+    <link rel="stylesheet" href="../TemplateData/style.css">
+    <link rel="stylesheet" href="../TemplateData/admin-style.css">
+    <link rel="stylesheet" href="./css/analytics.css">
+    <link rel="stylesheet" href="./css/marketing.css">
+    <!-- 优先加载侧边栏脚本 -->
+    <script src="./js/sidebar.js"></script>
+    <!-- 加载数据服务 -->
+    <script src="./js/data-service.js"></script>
+    <!-- 引入 ECharts -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+  </head>
+  <body>
+    <!-- 顶部导航栏 -->
+    <header class="header">
+      <div class="header-menu-toggle">☰</div>
+      <div class="system-logo">
+        茶产品智能营销系统
+      </div>
+      <div class="welcome-text">欢迎 超级管理员</div>
+      <div class="header-buttons">
+        <button class="header-btn" id="changePasswordBtn">
+          <i class="icon-placeholder icon-user"></i> 修改密码
+        </button>
+        <button class="header-btn logout-btn" onclick="logout()">
+          <i class="icon-placeholder icon-logout"></i> 退出系统
+        </button>
+      </div>
+    </header>
+
+    <!-- 左侧边栏 -->
+    <nav class="sidebar">
+      <ul class="sidebar-menu">
+        <li class="sidebar-item">
+          <a href="../index.html" class="sidebar-link">
+            <i class="icon-placeholder icon-simulation"></i>
+            仿真模拟系统
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="../model-config.html" class="sidebar-link">
+            <i class="icon-placeholder icon-settings"></i>
+            模型配置
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="./dashboard.html" class="sidebar-link">
+            <i class="icon-placeholder icon-dashboard"></i>
+            数据概览
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="./consumer.html" class="sidebar-link">
+            <i class="icon-placeholder icon-user"></i>
+            消费者分析
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="./region.html" class="sidebar-link">
+            <i class="icon-placeholder icon-location"></i>
+            地域分析
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="./psychology.html" class="sidebar-link">
+            <i class="icon-placeholder icon-opportunity"></i>
+            消费心理分析
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="./marketing.html" class="sidebar-link active">
+            <i class="icon-placeholder icon-idea"></i>
+            营销策略
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- 主内容区域 -->
+    <main class="main-content">
+      <div class="dashboard-container">
+        <!-- 标题居中 -->
+        <div class="strategy-title-center">
+          <h2>智能营销策略建议</h2>
+        </div>
+        
+        <div class="strategy-control-row">
+          <!-- 策略分类选项 -->
+          <div class="filter-options">
+            <div class="filter-option active" data-filter="all">全部策略</div>
+            <div class="filter-option" data-filter="brand">品牌策略</div>
+            <div class="filter-option" data-filter="product">产品策略</div>
+            <div class="filter-option" data-filter="promotion">推广策略</div>
+            <div class="filter-option" data-filter="channel">渠道策略</div>
+            <div class="filter-option" data-filter="customer">客户策略</div>
+          </div>
+          
+          <!-- 右侧操作按钮 -->
+          <div class="filter-actions">
+            <button class="refresh-btn" id="refreshStrategyBtn">
+              <i class="icon-placeholder icon-simulation"></i> 刷新数据
+            </button>
+            <button class="refresh-btn test-btn" id="testStrategyBtn">
+              <i class="icon-placeholder icon-settings"></i> 测试策略
+            </button>
+          </div>
+        </div>
+        
+        <!-- 策略概览指标 -->
+        <div class="metrics-container" id="metricsContainer" style="display: none;">
+          <div class="metric-card">
+            <div class="metric-title">预期客流量提升</div>
+            <div class="metric-value">
+              <span id="trafficIncrease">32.7</span>%
+              <div class="metric-trend positive">
+                <span class="trend-arrow">↑</span>
+                <span>8.2</span>%
+              </div>
+            </div>
+          </div>
+          
+          <div class="metric-card">
+            <div class="metric-title">预期销售额增长</div>
+            <div class="metric-value">
+              <span id="salesIncrease">45.3</span>%
+              <div class="metric-trend positive">
+                <span class="trend-arrow">↑</span>
+                <span>12.8</span>%
+              </div>
+            </div>
+          </div>
+          
+          <div class="metric-card">
+            <div class="metric-title">品牌声誉提升</div>
+            <div class="metric-value">
+              <span id="brandReputation">27.9</span>%
+              <div class="metric-trend positive">
+                <span class="trend-arrow">↑</span>
+                <span>5.4</span>%
+              </div>
+            </div>
+          </div>
+          
+          <div class="metric-card">
+            <div class="metric-title">客户忠诚度提升</div>
+            <div class="metric-value">
+              <span id="customerLoyalty">38.2</span>%
+              <div class="metric-trend positive">
+                <span class="trend-arrow">↑</span>
+                <span>9.6</span>%
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 策略列表容器使用网格布局，默认隐藏 -->
+        <div id="strategyList" class="strategy-grid" style="display: none;">
+          <!-- 策略建议卡片会动态插入 -->
+        </div>
+        <div id="strategyLoading" style="display:none;text-align:center;color:#1890ff;font-size:16px;margin-top:30px;">
+          正在获取策略建议...
+        </div>
+        <div id="strategyError" style="display:none;text-align:center;color:#f5222d;font-size:16px;margin:30px 0;">
+          策略建议获取失败，请稍后重试。
+        </div>
+        <div id="strategyEmpty" style="text-align:center;color:#8c8c8c;font-size:16px;margin:40px 0;">
+          请等待用户模拟结束查看完整智能营销策略建议
+        </div>
+      </div>
+    </main>
+
+    <!-- 策略详情模态框 -->
+    <div id="strategyModal" class="modal">
+      <div class="modal-content strategy-modal-content" style="width: 80%; max-width: 900px;">
+        <div class="modal-header">
+          <h3 id="modalStrategyTitle">策略详情</h3>
+          <span class="close">&times;</span>
+        </div>
+        <div class="modal-body strategy-modal-body" id="modalStrategyContent">
+          <!-- 策略详情内容 -->
+        </div>
+      </div>
+    </div>
+
+    <!-- 修改密码模态框 -->
+    <div id="passwordModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>修改密码</h3>
+          <span class="close">&times;</span>
+        </div>
+        <div class="modal-body">
+          <form id="changePasswordForm">
+            <div class="form-group">
+              <label for="currentPassword">当前密码</label>
+              <input type="password" id="currentPassword" required>
+            </div>
+            <div class="form-group">
+              <label for="newPassword">新密码</label>
+              <input type="password" id="newPassword" required>
+            </div>
+            <div class="form-group">
+              <label for="confirmPassword">确认新密码</label>
+              <input type="password" id="confirmPassword" required>
+            </div>
+            <div class="form-group">
+              <p id="passwordError" class="error-message"></p>
+            </div>
+            <div class="form-buttons">
+              <button type="button" class="cancel-btn">取消</button>
+              <button type="submit" class="submit-btn">保存</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="./js/common.js"></script>
+    <script src="./js/marketing.js"></script>
+  </body>
+</html> 
