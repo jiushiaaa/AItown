@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模型配置 - 基于多Agent协同的茶产品智能营销系统</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">
+    <link rel="stylesheet" href="TemplateData/admin-style.css">
+    <style>
+      /* 侧边栏图标样式 */
+      .sidebar-menu .icon-placeholder {
+        margin-right: 8px;
+        display: inline-block !important;
+        width: 16px;
+        height: 16px;
+        text-align: center;
+        font-style: normal;
+        visibility: visible !important;
+        opacity: 1 !important;
+      }
+
+      /* 每个图标的独特样式 */
+      .icon-simulation:before {
+        content: "🏭"; /* 工厂/模拟 */
+      }
+
+      .icon-settings:before {
+        content: "⚙️"; /* 齿轮/设置 */
+      }
+
+      .icon-dashboard:before {
+        content: "📊"; /* 图表/仪表盘 */
+      }
+
+      .icon-user:before {
+        content: "👤"; /* 用户/人物 */
+      }
+
+      .icon-location:before {
+        content: "🗺️"; /* 地图/地址 */
+      }
+
+      .icon-opportunity:before {
+        content: "🔍"; /* 放大镜/分析 */
+      }
+
+      .icon-idea:before {
+        content: "💡"; /* 灯泡/创意 */
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 顶部导航栏 -->
+    <header class="header">
+      <div class="header-menu-toggle">☰</div>
+      <div class="system-logo">
+        茶产品智能营销系统
+      </div>
+      <div class="welcome-text">欢迎 超级管理员</div>
+      <div class="header-buttons">
+        <button class="header-btn" id="changePasswordBtn">
+          <i class="icon-placeholder icon-user"></i> 修改密码
+        </button>
+        <button class="header-btn logout-btn" onclick="logout()">
+          <i class="icon-placeholder icon-logout"></i> 退出系统
+        </button>
+      </div>
+    </header>
+
+    <!-- 左侧边栏 -->
+    <nav class="sidebar">
+      <ul class="sidebar-menu">
+        <li class="sidebar-item">
+          <a href="index.html" class="sidebar-link">
+            <i class="icon-placeholder icon-simulation"></i>
+            仿真模拟系统
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="model-config.html" class="sidebar-link active">
+            <i class="icon-placeholder icon-settings"></i>
+            模型配置
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="analytics/dashboard.html" class="sidebar-link">
+            <i class="icon-placeholder icon-dashboard"></i>
+            数据概览
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="analytics/consumer.html" class="sidebar-link">
+            <i class="icon-placeholder icon-user"></i>
+            消费者分析
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="analytics/region.html" class="sidebar-link">
+            <i class="icon-placeholder icon-location"></i>
+            地域分析
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="analytics/psychology.html" class="sidebar-link">
+            <i class="icon-placeholder icon-opportunity"></i>
+            消费心理分析
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="analytics/marketing.html" class="sidebar-link">
+            <i class="icon-placeholder icon-idea"></i>
+            营销策略
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- 主内容区域 -->
+    <main class="main-content">
+      <div class="panel">
+        <div class="panel-header">
+          <h2>大模型配置</h2>
+          <p>配置AI大模型参数，用于仿真模拟系统</p>
+        </div>
+        <div class="panel-body">
+          <form id="modelConfigForm">
+            <div class="form-section">
+              <h3>选择AI模型</h3>
+              <div class="model-selection">
+                <div class="model-card" data-model="zhengshantang-model">
+                  <div class="model-logo zst-logo"></div>
+                  <div class="model-info">
+                    <h4>正山堂茶叶专有模型</h4>
+                    <p>基于10万+条真实正山堂消费者评论数据集微调的专有大模型</p>
+                  </div>
+                  <div class="model-check">
+                    <input type="radio" name="modelType" id="zhengshantang" value="zhengshantang-model" checked>
+                    <label for="zhengshantang">当前使用</label>
+                  </div>
+                </div>
+                
+                <div class="model-card" data-model="ernie-4.5-turbo">
+                  <div class="model-logo ernie-logo"></div>
+                  <div class="model-info">
+                    <h4>ERNIE 4.5 turbo</h4>
+                    <p>百度最新大模型，更强的理解与生成能力</p>
+                  </div>
+                  <div class="model-check">
+                    <input type="radio" name="modelType" id="ernie45" value="ernie-4.5-turbo">
+                    <label for="ernie45">选择</label>
+                  </div>
+                </div>
+                
+                <div class="model-card" data-model="deepseek-v3">
+                  <div class="model-logo deepseek-logo"></div>
+                  <div class="model-info">
+                    <h4>DeepSeek-V3</h4>
+                    <p>深度求索开源大模型，精确指令理解能力</p>
+                  </div>
+                  <div class="model-check">
+                    <input type="radio" name="modelType" id="deepseek" value="deepseek-v3">
+                    <label for="deepseek">选择</label>
+                  </div>
+                </div>
+                
+                <div class="model-card" data-model="gpt-4o">
+                  <div class="model-logo openai-logo"></div>
+                  <div class="model-info">
+                    <h4>GPT-4o</h4>
+                    <p>OpenAI最新多模态大模型</p>
+                  </div>
+                  <div class="model-check">
+                    <input type="radio" name="modelType" id="gpt4o" value="gpt-4o">
+                    <label for="gpt4o">选择</label>
+                  </div>
+                </div>
+                
+                <div class="model-card" data-model="qwen-max">
+                  <div class="model-logo qwen-logo"></div>
+                  <div class="model-info">
+                    <h4>Qwen2.5-Max</h4>
+                    <p>阿里云最新大语言模型</p>
+                  </div>
+                  <div class="model-check">
+                    <input type="radio" name="modelType" id="qwen" value="qwen-max">
+                    <label for="qwen">选择</label>
+                  </div>
+                </div>
+                
+                <div class="model-card custom-model-card" data-model="custom-model">
+                  <div class="model-logo custom-logo"></div>
+                  <div class="model-info">
+                    <h4>自定义模型</h4>
+                    <p>输入您自己的模型配置</p>
+                    <input type="text" id="customModelName" class="custom-model-input" placeholder="输入模型名称" autocomplete="off">
+                  </div>
+                  <div class="model-check">
+                    <input type="radio" name="modelType" id="custom" value="custom-model">
+                    <label for="custom">选择</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-section">
+              <h3>API配置</h3>
+              <div class="form-group">
+                <label for="apiKey">API Key</label>
+                <input type="password" id="apiKey" name="apiKey" placeholder="请输入API密钥">
+                <small>API密钥将加密存储在浏览器中</small>
+              </div>
+              
+              <div class="form-group">
+                <label for="baseUrl">API基础URL</label>
+                <input type="text" id="baseUrl" name="baseUrl" placeholder="请输入API基础URL">
+                <small>默认URL: https://aistudio.baidu.com/llm/lmapi/v3</small>
+              </div>
+            </div>
+            
+            <div class="form-section">
+              <h3>高级设置</h3>
+              <div class="form-group">
+                <label for="temperature">温度系数</label>
+                <div class="range-container">
+                  <input type="range" id="temperature" name="temperature" min="0" max="1" step="0.1" value="0.7">
+                  <span class="range-value">0.7</span>
+                </div>
+                <small>较低的值使输出更确定，较高的值使输出更随机创新</small>
+              </div>
+              
+              <div class="form-group">
+                <label for="requestTimeout">请求超时(秒)</label>
+                <input type="number" id="requestTimeout" name="requestTimeout" min="10" max="300" value="60">
+              </div>
+              
+              <div class="form-check">
+                <input type="checkbox" id="cacheEnabled" name="cacheEnabled" checked>
+                <label for="cacheEnabled">启用结果缓存</label>
+              </div>
+            </div>
+            
+            <div class="form-buttons">
+              <button type="button" class="btn-secondary" id="resetBtn">恢复默认设置</button>
+              <button type="submit" class="btn-primary">保存设置</button>
+            </div>
+            <div style="height: 40px;"></div>
+          </form>
+        </div>
+      </div>
+    </main>
+    
+    <!-- 修改密码模态框 (与index.html相同) -->
+    <div id="passwordModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>修改密码</h3>
+          <span class="close">&times;</span>
+        </div>
+        <div class="modal-body">
+          <form id="changePasswordForm">
+            <div class="form-group">
+              <label for="currentPassword">当前密码</label>
+              <input type="password" id="currentPassword" required>
+            </div>
+            <div class="form-group">
+              <label for="newPassword">新密码</label>
+              <input type="password" id="newPassword" required>
+            </div>
+            <div class="form-group">
+              <label for="confirmPassword">确认新密码</label>
+              <input type="password" id="confirmPassword" required>
+            </div>
+            <div class="form-group">
+              <p id="passwordError" class="error-message"></p>
+            </div>
+            <div class="form-buttons">
+              <button type="button" class="cancel-btn">取消</button>
+              <button type="submit" class="submit-btn">保存</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // 检查用户是否已登录，未登录则重定向到登录页面
+      if (localStorage.getItem('isLoggedIn') !== 'true' && sessionStorage.getItem('isLoggedIn') !== 'true') {
+        window.location.href = 'login.html';
+      }
+      
+      // 退出登录功能
+      function logout() {
+        // 清除所有登录状态
+        localStorage.removeItem('isLoggedIn');
+        sessionStorage.removeItem('isLoggedIn');
+        // 重定向到登录页面
+        window.location.href = 'login.html';
+      }
+      
+      // 模型配置功能
+      document.addEventListener('DOMContentLoaded', function() {
+        // 默认配置
+        const defaultConfig = {
+          modelType: 'zhengshantang-model',
+          baseUrl: 'https://aistudio.baidu.com/llm/lmapi/v3',
+          temperature: 0.7,
+          requestTimeout: 60,
+          cacheEnabled: true
+        };
+        
+        // DOM元素
+        const form = document.getElementById('modelConfigForm');
+        const apiKeyInput = document.getElementById('apiKey');
+        const baseUrlInput = document.getElementById('baseUrl');
+        const temperatureInput = document.getElementById('temperature');
+        const temperatureValue = document.querySelector('.range-value');
+        const requestTimeoutInput = document.getElementById('requestTimeout');
+        const cacheEnabledInput = document.getElementById('cacheEnabled');
+        const resetBtn = document.getElementById('resetBtn');
+        const modelCards = document.querySelectorAll('.model-card');
+        const customModelInput = document.getElementById('customModelName');
+        
+        // 加载保存的配置
+        loadConfig();
+        
+        // 温度系数滑块事件
+        temperatureInput.addEventListener('input', function() {
+          temperatureValue.textContent = this.value;
+        });
+        
+        // 模型卡片选择事件
+        modelCards.forEach(card => {
+          card.addEventListener('click', function() {
+            const radioBtn = this.querySelector('input[type="radio"]');
+            radioBtn.checked = true;
+            
+            // 更新UI
+            modelCards.forEach(c => c.classList.remove('selected'));
+            this.classList.add('selected');
+            
+            // 根据选择的模型更新基础URL提示
+            updateBaseUrlPlaceholder(radioBtn.value);
+          });
+        });
+        
+        // 自定义模型输入框事件
+        if (customModelInput) {
+          customModelInput.addEventListener('focus', function() {
+            // 在输入框获取焦点时自动选中自定义模型选项
+            document.getElementById('custom').checked = true;
+            
+            // 更新UI
+            modelCards.forEach(c => c.classList.remove('selected'));
+            document.querySelector('.custom-model-card').classList.add('selected');
+            
+            // 更新URL提示
+            updateBaseUrlPlaceholder('custom-model');
+          });
+          
+          customModelInput.addEventListener('input', function() {
+            // 当用户输入自定义模型名称时，更新自定义模型值
+            document.getElementById('custom').value = this.value || 'custom-model';
+          });
+        }
+        
+        // 提交表单事件
+        form.addEventListener('submit', function(event) {
+          event.preventDefault();
+          
+          // 获取选中的模型
+          const selectedModel = document.querySelector('input[name="modelType"]:checked').value;
+          
+          // 保存配置
+          const config = {
+            modelType: selectedModel === 'custom-model' ? (customModelInput.value || 'custom-model') : selectedModel,
+            customModelName: customModelInput.value, // 保存自定义模型名称
+            apiKey: apiKeyInput.value,
+            baseUrl: baseUrlInput.value,
+            temperature: parseFloat(temperatureInput.value),
+            requestTimeout: parseInt(requestTimeoutInput.value),
+            cacheEnabled: cacheEnabledInput.checked
+          };
+          
+          saveConfig(config);
+          
+          // 显示成功消息
+          showMessage('配置已成功保存！');
+        });
+        
+        // 重置按钮事件
+        resetBtn.addEventListener('click', function() {
+          resetConfig();
+        });
+        
+        // 根据模型类型更新基础URL提示
+        function updateBaseUrlPlaceholder(modelType) {
+          switch(modelType) {
+            case 'zhengshantang-model':
+              baseUrlInput.placeholder = '默认正山堂专有模型URL: https://aistudio.baidu.com/llm/lmapi/v3';
+              break;
+            case 'ernie-4.5-turbo':
+              baseUrlInput.placeholder = '默认URL: https://aistudio.baidu.com/llm/lmapi/v3';
+              break;
+            case 'deepseek-v3':
+              baseUrlInput.placeholder = '默认URL: https://api.deepseek.com/v1';
+              break;
+            case 'gpt-4o':
+              baseUrlInput.placeholder = '默认OpenAI URL: https://api.openai.com/v1';
+              break;
+            case 'qwen-max':
+              baseUrlInput.placeholder = '默认通义千问URL: https://dashscope.aliyuncs.com/api/v1';
+              break;
+            case 'custom-model':
+              baseUrlInput.placeholder = '请输入模型服务API基础URL';
+              break;
+          }
+        }
+        
+        // 加载保存的配置
+        function loadConfig() {
+          let config = JSON.parse(localStorage.getItem('modelConfig')) || defaultConfig;
+          
+          // 设置自定义模型名称（如果有）
+          if (config.customModelName && customModelInput) {
+            customModelInput.value = config.customModelName;
+          }
+          
+          // 处理自定义模型情况
+          if (config.modelType !== 'zhengshantang-model' && 
+              config.modelType !== 'ernie-4.5-turbo' && 
+              config.modelType !== 'deepseek-v3' && 
+              config.modelType !== 'gpt-4o' && 
+              config.modelType !== 'qwen-max') {
+            // 可能是自定义模型
+            document.getElementById('custom').checked = true;
+            document.getElementById('custom').value = config.modelType;
+            document.querySelector('.custom-model-card').classList.add('selected');
+            if (customModelInput) customModelInput.value = config.modelType;
+          } else {
+            // 设置表单值
+            const radioInput = document.querySelector(`input[value="${config.modelType}"]`);
+            if (radioInput) {
+              radioInput.checked = true;
+              document.querySelector(`[data-model="${config.modelType}"]`).classList.add('selected');
+            }
+          }
+          
+          if (config.apiKey) {
+            apiKeyInput.value = config.apiKey;
+          }
+          
+          if (config.baseUrl) {
+            baseUrlInput.value = config.baseUrl;
+          }
+          
+          temperatureInput.value = config.temperature;
+          temperatureValue.textContent = config.temperature;
+          
+          requestTimeoutInput.value = config.requestTimeout;
+          cacheEnabledInput.checked = config.cacheEnabled;
+          
+          // 更新URL提示
+          const selectedModel = document.querySelector('input[name="modelType"]:checked').value;
+          updateBaseUrlPlaceholder(selectedModel);
+        }
+        
+        // 保存配置
+        function saveConfig(config) {
+          localStorage.setItem('modelConfig', JSON.stringify(config));
+        }
+        
+        // 重置配置
+        function resetConfig() {
+          localStorage.removeItem('modelConfig');
+          loadConfig();
+          showMessage('已恢复默认设置');
+        }
+        
+        // 显示消息
+        function showMessage(message) {
+          const msgElement = document.createElement('div');
+          msgElement.className = 'message-toast';
+          msgElement.textContent = message;
+          document.body.appendChild(msgElement);
+          
+          setTimeout(() => {
+            msgElement.classList.add('show');
+          }, 10);
+          
+          setTimeout(() => {
+            msgElement.classList.remove('show');
+            setTimeout(() => {
+              document.body.removeChild(msgElement);
+            }, 300);
+          }, 3000);
+        }
+        
+        // 修改密码功能（与index.html相同）
+        const modal = document.getElementById('passwordModal');
+        const openModalBtn = document.getElementById('changePasswordBtn');
+        const closeBtn = document.querySelector('.close');
+        const cancelBtn = document.querySelector('.cancel-btn');
+        const passwordForm = document.getElementById('changePasswordForm');
+        const currentPasswordInput = document.getElementById('currentPassword');
+        const newPasswordInput = document.getElementById('newPassword');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        const errorMessage = document.getElementById('passwordError');
+        
+        // 打开模态框
+        openModalBtn.addEventListener('click', function() {
+          modal.classList.add('show');
+          // 清空表单
+          passwordForm.reset();
+          errorMessage.textContent = '';
+        });
+        
+        // 关闭模态框的多种方式
+        function closeModal() {
+          modal.classList.remove('show');
+        }
+        
+        closeBtn.addEventListener('click', closeModal);
+        cancelBtn.addEventListener('click', closeModal);
+        
+        // 点击模态框外部关闭
+        window.addEventListener('click', function(event) {
+          if (event.target === modal) {
+            closeModal();
+          }
+        });
+        
+        // 提交修改密码表单
+        passwordForm.addEventListener('submit', function(event) {
+          event.preventDefault();
+          
+          const currentPassword = currentPasswordInput.value;
+          const newPassword = newPasswordInput.value;
+          const confirmPassword = confirmPasswordInput.value;
+          
+          // 验证当前密码
+          const savedPassword = localStorage.getItem('userPassword') || 'admin';
+          if (currentPassword !== savedPassword) {
+            errorMessage.textContent = '当前密码不正确！';
+            return;
+          }
+          
+          // 验证新密码长度
+          if (newPassword.length < 6) {
+            errorMessage.textContent = '新密码长度至少为6个字符！';
+            return;
+          }
+          
+          // 验证两次密码输入是否一致
+          if (newPassword !== confirmPassword) {
+            errorMessage.textContent = '两次输入的密码不一致！';
+            return;
+          }
+          
+          // 保存新密码
+          if (localStorage.getItem('isLoggedIn') === 'true') {
+            localStorage.setItem('userPassword', newPassword);
+          } else {
+            sessionStorage.setItem('userPassword', newPassword);
+          }
+          
+          // 显示成功消息并关闭模态框
+          alert('密码修改成功！下次登录请使用新密码。');
+          closeModal();
+        });
+      });
+      
+      // 移动端菜单切换
+      document.querySelector('.header-menu-toggle').addEventListener('click', function() {
+        document.querySelector('.sidebar').classList.toggle('active');
+        document.querySelector('.main-content').classList.toggle('sidebar-active');
+      });
+    </script>
+  </body>
+</html> 
