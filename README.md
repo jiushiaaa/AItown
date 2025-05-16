@@ -83,7 +83,7 @@ npm run serve
 1. 在浏览器中直接访问`http://你的域名/web/` (部署版本)
 2. 或通过Unity Editor打开`My project`文件夹，运行主场景进行本地测试
 
-或者直接通过双击erniebot文件下的start_webgl.bat文件一键启动
+或者直接通过双击`erniebot`文件下的`start_webgl.bat`文件一键启动
 
 ## API接口文档
 
